@@ -34,6 +34,7 @@ public class Account {
     private String accountNumber;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)

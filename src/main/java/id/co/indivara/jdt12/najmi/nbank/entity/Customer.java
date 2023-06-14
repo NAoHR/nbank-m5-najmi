@@ -1,5 +1,6 @@
 package id.co.indivara.jdt12.najmi.nbank.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import id.co.indivara.jdt12.najmi.nbank.enums.HighestEducationEnum;
 import id.co.indivara.jdt12.najmi.nbank.enums.MaritalStatusEnum;
 import lombok.AllArgsConstructor;
@@ -68,5 +69,6 @@ public class Customer {
 
     @Column(nullable = false)
     @Size(min = 8)
+    @JsonIgnore
     private String password;
 }

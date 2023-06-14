@@ -1,5 +1,6 @@
 package id.co.indivara.jdt12.najmi.nbank.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class TrxWithdraw {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_number")
+    @JsonIgnore
     private Account account;
 
     @Column(nullable = false)
