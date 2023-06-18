@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class TrxTransfer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_number")
+//    @JsonIgnore
     private Account account;
 
     @Column(nullable = false)
@@ -31,6 +33,7 @@ public class TrxTransfer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination",referencedColumnName = "account_number")
+//    @JsonIgnore
     private Account destination;
 
     private Timestamp timestamp;

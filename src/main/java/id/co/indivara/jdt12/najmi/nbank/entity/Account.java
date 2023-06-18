@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "Accounts")
-public class Account {
+public class Account implements Serializable{
     @Id
     @Column(name = "account_id", nullable = false)
     private UUID accountId;
