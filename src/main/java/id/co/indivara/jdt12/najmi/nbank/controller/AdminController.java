@@ -57,7 +57,7 @@ public class AdminController {
     // detail
     @GetMapping("/customer/{cuid}")
     public ResponseEntity<Object> displayCustomerAndItsAccounts(@PathVariable("cuid") UUID cuid){
-        return ResponseEntity.status(HttpStatus.CREATED).body(
+        return ResponseEntity.status(HttpStatus.FOUND).body(
                 WebResponse.<DisplayCustomerAndAllAccountsResponse, NullType>builder()
                         .message("Customer Found")
                         .data(adminService.displayCustomerAndAllAccounts(cuid))
@@ -71,7 +71,7 @@ public class AdminController {
             @PathVariable UUID acid
             , @RequestParam(value = "type", required = false, defaultValue = "all") String type
             ){
-        return ResponseEntity.status(HttpStatus.CREATED).body(
+        return ResponseEntity.status(HttpStatus.FOUND).body(
                 WebResponse.<HashMap<String, Object>, NullType>builder()
                         .message("Customer Found")
                         .data(adminService.displayAccountTransactionActivity(acid, type))
@@ -85,7 +85,7 @@ public class AdminController {
     // transaction
     @PostMapping("/transaction/deposit")
     public ResponseEntity<Object> depoViaAdmin(@RequestBody DepositRequest depo){
-        return ResponseEntity.status(HttpStatus.CREATED).body(
+        return ResponseEntity.status(HttpStatus.FOUND).body(
                 WebResponse.<TrxDeposit, NullType>builder()
                         .message("Deposit Success")
                         .data(adminService.depositToAnAccount(depo))
