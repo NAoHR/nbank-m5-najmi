@@ -1,6 +1,7 @@
 package id.co.indivara.jdt12.najmi.nbank.service.serviceimpl;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.*;
+import id.co.indivara.jdt12.najmi.nbank.enums.TransactionTypeEnum;
 import id.co.indivara.jdt12.najmi.nbank.exception.AccountNotFoundException;
 import id.co.indivara.jdt12.najmi.nbank.exception.CustomerNotFoundException;
 import id.co.indivara.jdt12.najmi.nbank.exception.ValidActivityException;
@@ -88,6 +89,8 @@ public class AccountServiceImpl implements AccountService {
         accountHelper.checkAccountType(account);
         if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
 
+        accountHelper.exceedingAmountOfTransaction(account, TransactionTypeEnum.DEPOSIT, amount);
+
         account.setBalance(account.getBalance().add(amount));
 
         TrxDeposit trxDeposit = TrxDeposit.builder()
@@ -96,9 +99,9 @@ public class AccountServiceImpl implements AccountService {
                 .account(account)
                 .build();
 
+
         accountRepo.save(account);
         trxDepositRepo.save(trxDeposit);
-
         return trxDeposit;
     }
 
@@ -109,6 +112,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountHelper.checkAccountType(account);
         if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
+        accountHelper.exceedingAmountOfTransaction(account, TransactionTypeEnum.WITHDRAW, amount);
 
         BigDecimal nowMoney = account.getBalance().subtract(amount);
         accountHelper.checkAllowedMinimumBalance(account, nowMoney);
@@ -143,6 +147,7 @@ public class AccountServiceImpl implements AccountService {
         BigDecimal accountFromMoney = accountFrom.getBalance().subtract(money);
 
         accountHelper.checkAllowedMinimumBalance(accountFrom, accountFromMoney);
+        accountHelper.exceedingAmountOfTransaction(accountFrom, TransactionTypeEnum.TRANSFER, money);
 
         BigDecimal accountToMoney = accountTo.getBalance().add(money);
 
