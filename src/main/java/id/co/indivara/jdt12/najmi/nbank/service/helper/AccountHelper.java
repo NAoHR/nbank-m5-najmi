@@ -102,9 +102,9 @@ public class AccountHelper {
 
     private BigDecimal getLimitTransactionVaulue(Account ac, TransactionTypeEnum t){
         if (Objects.requireNonNull(ac.getAccountType()) == AccountTypeEnum.CHECKING) {
-            return limitTransaction(t, 10_000_000L, 15_000_000L, 7_000_000);
+            return limitTransaction(t, 15_000_000L, 20_000_000L, 20_000_000);
         }
-        return limitTransaction(t, 15_000_000L, 10_000_000L, 5_000_000);
+        return limitTransaction(t, 35_000_000L, 15_000_000L, 10_000_000);
     }
     private BigDecimal limitTransaction(TransactionTypeEnum t, Long deposit, long transfer, long withdraw){
         switch (t){

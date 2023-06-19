@@ -85,7 +85,7 @@ public class AdminController {
     // transaction
     @PostMapping("/transaction/deposit")
     public ResponseEntity<Object> depoViaAdmin(@RequestBody DepositRequest depo){
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.status(HttpStatus.CREATED).body(
                 WebResponse.<TrxDeposit, NullType>builder()
                         .message("Deposit Success")
                         .data(adminService.depositToAnAccount(depo))
