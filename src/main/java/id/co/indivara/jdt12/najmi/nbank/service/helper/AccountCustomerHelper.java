@@ -21,7 +21,7 @@ public class AccountCustomerHelper {
     }
 
     public BigDecimal customValidateBalanceAndType(BigDecimal balance, AccountTypeEnum type){
-        if((type.equals(AccountTypeEnum.SAVINGS) && balance.compareTo(BigDecimal.valueOf(100_000)) < 0) || (type.equals(AccountTypeEnum.TIME_DEPOSIT) && balance.compareTo(BigDecimal.valueOf(1_000_000)) < 0)){
+        if((type.equals(AccountTypeEnum.SAVINGS) && balance.compareTo(BigDecimal.valueOf(500_000)) < 0) || (type.equals(AccountTypeEnum.TIME_DEPOSIT) && balance.compareTo(BigDecimal.valueOf(8_000_000)) < 0)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Money not valid : Please Fulfil specified Minimum money requirement");
         }
         return balance;
