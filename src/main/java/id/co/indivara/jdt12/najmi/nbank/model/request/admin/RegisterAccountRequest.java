@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class RegisterAccountRequest {
     @NotNull
+    @Pattern(regexp = "^[0-9]{6}+$", message = "Password must be a 6 digit number")
     private String accountPassword;
     @NotNull
     private StatusEnum status;
