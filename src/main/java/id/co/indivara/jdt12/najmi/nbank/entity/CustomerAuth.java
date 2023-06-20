@@ -23,7 +23,4 @@ public class CustomerAuth {
     private Customer customer;
 
     private String token;
-
-    @Column(name = "expired_at")
-    private Long expiredAt;
 }

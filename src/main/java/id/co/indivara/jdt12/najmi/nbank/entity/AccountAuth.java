@@ -25,7 +25,4 @@ public class AccountAuth {
     private Account account;
 
     private String token;
-
-    @Column(name = "expired_at")
-    private Long expiredAt;
 }
