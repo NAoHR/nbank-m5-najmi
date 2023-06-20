@@ -24,8 +24,8 @@ public interface AdminService {
     RegisterAccountResponse registerAccount(RegisterAccountRequest accountRequest);
 
     // display Mandatory
-    HashMap<String, Object> displayAccountTransactionActivity(UUID accountId, String transactionType);
-    DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(UUID customerId);
+    HashMap<String, Object> displayAccountTransactionActivity(String accountNumber, String transactionType);
+    DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(String customerEmail);
 
     // transaction mandatory
     TrxDeposit depositToAnAccount(DepositRequest depo);

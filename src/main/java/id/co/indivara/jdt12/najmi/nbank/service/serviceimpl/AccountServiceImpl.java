@@ -43,12 +43,11 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public HashMap<String, Object> displayAccountTransactionActivity(UUID accountId, String transactionType) {
-        Account account = accountRepo.findById(accountId).orElseThrow(AccountNotFoundException::new);
+    public HashMap<String, Object> displayAccountTransactionActivity(String accountNumber, String transactionType) {
+        Account account = accountRepo.findByAccountNumber(accountNumber).orElseThrow(AccountNotFoundException::new);
         HashMap<String, Object> maps = new HashMap<>();
         switch (transactionType.toLowerCase()){
             case "transfer":
-
                 maps.put("transfer", accountHelper.transferActivity(trxTransferRepo.findAllByAccount(account)));
                 break;
             case "deposit":
@@ -70,8 +69,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(UUID customerId) {
-        Customer customer = customerRepo.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+    public DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(String customerEmail) {
+        System.out.println(customerEmail);
+        Customer customer = customerRepo.findByEmail(customerEmail).orElseThrow(CustomerNotFoundException::new);
         List<Account> accounts = accountRepo.findAllByCustomer(customer);
 
         return DisplayCustomerAndAllAccountsResponse.builder()

@@ -65,6 +65,9 @@ public class AdminControllerTests {
 
     @Autowired
     private CustomerRepo customerRepo;
+
+    @Autowired
+    private CustomerAuthRepo customerAuthRepo;
     @Autowired
     private TrxTransferRepo trxTransferRepo;
     @Autowired
@@ -76,9 +79,11 @@ public class AdminControllerTests {
     @Autowired
     private TestHelper testHelper;
 
+
     @Before // jalanin setiap sebelum test
     public void setup(){
         objectMapper.registerModule(new JavaTimeModule());
+        customerAuthRepo.deleteAll();
         trxDepositRepo.deleteAll();
         trxWithdrawRepo.deleteAll();
         trxTransferRepo.deleteAll();
@@ -212,7 +217,7 @@ public class AdminControllerTests {
     public void registerAccountSuccessTest() throws Exception{
         Customer customer = testHelper.createOkCustomer();
         RegisterAccountRequest request = RegisterAccountRequest.builder()
-                .accountPassword("password123")
+                .accountPassword("123456")
                 .status(StatusEnum.ACTIVE)
                 .accountType(AccountTypeEnum.SAVINGS)
                 .balance(new BigDecimal(500_000))
@@ -249,7 +254,7 @@ public class AdminControllerTests {
     public void registerAccountFailedNoCustomerProvidedTest() throws Exception{
         Customer customer = testHelper.createOkCustomer();
         RegisterAccountRequest request = RegisterAccountRequest.builder()
-                .accountPassword("password123")
+                .accountPassword("123456")
                 .status(StatusEnum.ACTIVE)
                 .accountType(AccountTypeEnum.SAVINGS)
                 .balance(new BigDecimal(500_000))
@@ -279,7 +284,7 @@ public class AdminControllerTests {
     public void registerAccountFailedMissingFieldTest() throws Exception{
         Customer customer = testHelper.createOkCustomer();
         RegisterAccountRequest request = RegisterAccountRequest.builder()
-//                .accountPassword("password123")
+//                .accountPassword("123456")
                 .status(StatusEnum.ACTIVE)
 //                .accountType(AccountTypeEnum.SAVINGS)
                 .balance(new BigDecimal(500_000))
@@ -309,7 +314,7 @@ public class AdminControllerTests {
     public void registerAccountMoneyLessThanRequiredTest() throws Exception{
         Customer customer = testHelper.createOkCustomer();
         RegisterAccountRequest request = RegisterAccountRequest.builder()
-                .accountPassword("password123")
+                .accountPassword("123456")
                 .status(StatusEnum.ACTIVE)
                 .accountType(AccountTypeEnum.SAVINGS)
                 .balance(new BigDecimal(50_000)) // should be 500k
@@ -339,7 +344,7 @@ public class AdminControllerTests {
     public void displayCustomerAccountsTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         mockMvc.perform(
-                get(String.format("/api/admin/customer/%s", account.getCustomer().getCustomerId().toString()))
+                get(String.format("/api/admin/customer/%s", account.getCustomer().getEmail()))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("nbankadmin:password".getBytes()))
@@ -376,7 +381,7 @@ public class AdminControllerTests {
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
 
         mockMvc.perform(
-                get(String.format("/api/admin/customer/%s/transaction", account.getAccountId()))
+                get(String.format("/api/admin/customer/%s/transaction", account.getAccountNumber()))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("nbankadmin:password".getBytes()))

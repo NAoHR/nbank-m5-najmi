@@ -48,7 +48,11 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private CustomerAuthRepo customerAuthRepo;
+
     @Override
+    @Transactional
     public RegisterCustomerResponse registerCustomer(RegisterCustomerReq customerReq) {
         validatorService.validate(customerReq);
         if(customerRepo.existsByEmail(customerReq.getEmail())){
@@ -74,7 +78,12 @@ public class AdminServiceImpl implements AdminService {
                 .build();
 
 
-        customerRepo.save(customer);
+        Customer savedCustomer = customerRepo.save(customer);
+
+        customerAuthRepo.save(CustomerAuth.builder()
+                        .customer(savedCustomer)
+                        .token(null)
+                .build());
 
         return RegisterCustomerResponse.builder()
                 .customerId(customer.getCustomerId())
@@ -127,13 +136,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public HashMap<String, Object> displayAccountTransactionActivity(UUID accountId, String transactionType) {
-        return accountService.displayAccountTransactionActivity(accountId, transactionType);
+    public HashMap<String, Object> displayAccountTransactionActivity(String accountNumber, String transactionType) {
+        return accountService.displayAccountTransactionActivity(accountNumber, transactionType);
     }
 
     @Override
-    public DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(UUID customerId) {
-        return accountService.displayCustomerAndAllAccounts(customerId);
+    public DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(String customerEmail) {
+        return accountService.displayCustomerAndAllAccounts(customerEmail);
     }
 
     @Override

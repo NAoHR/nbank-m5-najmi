@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public interface AccountService {
-    HashMap<String, Object> displayAccountTransactionActivity(UUID accountId, String transactionType);
-    DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(UUID customerId);
+    HashMap<String, Object> displayAccountTransactionActivity(String accountNumber, String transactionType);
+    DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(String customerEmail);
     TrxDeposit deposit(UUID accountId, BigDecimal amount, boolean isWithBankOrAdmin);
     TrxWithdraw withdraw(UUID accountId, BigDecimal amount, boolean isBankOrAdmin);
     TrxTransferReferencedId transfer(UUID from, UUID to, BigDecimal money, boolean isBankOrAdmin);

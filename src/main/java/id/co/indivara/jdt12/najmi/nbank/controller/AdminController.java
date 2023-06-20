@@ -55,12 +55,12 @@ public class AdminController {
     }
 
     // detail
-    @GetMapping("/customer/{cuid}")
-    public ResponseEntity<Object> displayCustomerAndItsAccounts(@PathVariable("cuid") UUID cuid){
+    @GetMapping("/customer/{email}")
+    public ResponseEntity<Object> displayCustomerAndItsAccounts(@PathVariable("email") String customerEmail){
         return ResponseEntity.status(HttpStatus.FOUND).body(
                 WebResponse.<DisplayCustomerAndAllAccountsResponse, NullType>builder()
                         .message("Customer Found")
-                        .data(adminService.displayCustomerAndAllAccounts(cuid))
+                        .data(adminService.displayCustomerAndAllAccounts(customerEmail))
                         .timestamp(LocalDateTime.now())
                         .build()
         );
@@ -68,7 +68,7 @@ public class AdminController {
 
     @GetMapping("/customer/{acid}/transaction")
     public ResponseEntity<Object> displayTransactionActicity(
-            @PathVariable UUID acid
+            @PathVariable String acid
             , @RequestParam(value = "type", required = false, defaultValue = "all") String type
             ){
         return ResponseEntity.status(HttpStatus.FOUND).body(
