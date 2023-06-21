@@ -1,16 +1,22 @@
 package id.co.indivara.jdt12.najmi.nbank;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
+import id.co.indivara.jdt12.najmi.nbank.entity.AccountAuth;
 import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
+import id.co.indivara.jdt12.najmi.nbank.entity.CustomerAuth;
 import id.co.indivara.jdt12.najmi.nbank.enums.AccountTypeEnum;
 import id.co.indivara.jdt12.najmi.nbank.enums.HighestEducationEnum;
 import id.co.indivara.jdt12.najmi.nbank.enums.MaritalStatusEnum;
 import id.co.indivara.jdt12.najmi.nbank.enums.StatusEnum;
 import id.co.indivara.jdt12.najmi.nbank.model.request.admin.RegisterCustomerReq;
+import id.co.indivara.jdt12.najmi.nbank.repo.AccountAuthRepo;
 import id.co.indivara.jdt12.najmi.nbank.repo.AccountRepo;
+import id.co.indivara.jdt12.najmi.nbank.repo.CustomerAuthRepo;
 import id.co.indivara.jdt12.najmi.nbank.repo.CustomerRepo;
 import id.co.indivara.jdt12.najmi.nbank.security.BCrypt;
 import id.co.indivara.jdt12.najmi.nbank.service.helper.AccountCustomerHelper;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +24,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 @Component
@@ -29,11 +37,19 @@ public class TestHelper {
     private CustomerRepo customerRepo;
 
     @Autowired
-    AccountCustomerHelper accountCustomerHelper;
+    private AccountCustomerHelper accountCustomerHelper;
 
-    public final Customer createOkCustomer(){
-        RegisterCustomerReq customerReq = RegisterCustomerReq.builder()
-                .identityNumber("1234567890123456")
+    @Autowired
+    private AccountAuthRepo accountAuthRepo;
+
+    @Autowired
+    private CustomerAuthRepo customerAuthRepo;
+
+
+
+    public RegisterCustomerReq createcustomCustomerReq(){
+        return RegisterCustomerReq.builder()
+                .identityNumber(generateRandomIdentityNumber())
                 .firstName("John")
                 .lastName("Doe")
                 .phoneNumber("123456780")
@@ -46,6 +62,10 @@ public class TestHelper {
                 .highestEducation(HighestEducationEnum.BACHELORS_DEGREE)
                 .password("Password123")
                 .build();
+    }
+
+    public final Customer createOkCustomer(){
+        RegisterCustomerReq customerReq = createcustomCustomerReq();
 
         Customer customer = Customer.builder()
                 .customerId(UUID.randomUUID())
@@ -63,7 +83,12 @@ public class TestHelper {
                 .password(BCrypt.hashpw(customerReq.getPassword(), BCrypt.gensalt()))
                 .build();
 
-        customerRepo.save(customer);
+        customerAuthRepo.save(
+                CustomerAuth.builder()
+                        .customer(customerRepo.save(customer))
+                        .token(null)
+                        .build()
+        );
 
         return customer;
 
@@ -84,7 +109,13 @@ public class TestHelper {
                 .openDate(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
 
-        accountRepo.save(account);
+
+        AccountAuth accountAuth = AccountAuth.builder()
+                .token(null)
+                .account(accountRepo.save(account))
+                .build();
+
+        accountAuthRepo.save(accountAuth);
         return account;
     }
     public final Account createOkAccount(AccountTypeEnum accountType, Integer month, BigDecimal money){ // money
@@ -103,5 +134,26 @@ public class TestHelper {
 
         accountRepo.save(account);
         return account;
+    }
+
+    public String customJwtExpiredGenerator(UUID id, Integer time){
+        return Jwts.builder()
+                .setSubject(id.toString())
+                .setIssuer("nbank.com")
+                .setExpiration(new Date(System.currentTimeMillis() + time))
+                .signWith(Keys.hmacShaKeyFor("MJ4IafykM2RAhV2a7c5DUyMwKgrirm4z".getBytes()))
+                .compact();
+    }
+
+    private String generateRandomIdentityNumber() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(16);
+
+        for (int i = 0; i < 16; i++) {
+            int digit = random.nextInt(10);
+            sb.append(digit);
+        }
+
+        return sb.toString();
     }
 }
