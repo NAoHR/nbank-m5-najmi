@@ -1,5 +1,6 @@
 package id.co.indivara.jdt12.najmi.nbank.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class CustomerAuth {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="customer_id")
+    @JsonIgnore
     private Customer customer;
 
     private String token;
