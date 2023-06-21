@@ -24,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(accountSecurityInterceptor)
                 .addPathPatterns("/api/auth/account/logout")
+                .addPathPatterns("/api/atm/**")
         ;
     }
 }
