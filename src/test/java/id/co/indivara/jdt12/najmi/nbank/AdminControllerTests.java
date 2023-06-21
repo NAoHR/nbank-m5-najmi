@@ -791,8 +791,8 @@ public class AdminControllerTests {
         Account accountTo = testHelper.createOkAccount(AccountTypeEnum.CHECKING, 0);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(accountFrom.getAccountId())
-                .destination(accountTo.getAccountId())
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
                 .amount(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -824,8 +824,8 @@ public class AdminControllerTests {
         Account accountTo = testHelper.createOkAccount(AccountTypeEnum.CHECKING, 0);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(UUID.randomUUID())
-                .destination(accountTo.getAccountId())
+                .from("111111111111111")
+                .destination(accountTo.getAccountNumber())
                 .amount(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -853,8 +853,8 @@ public class AdminControllerTests {
         Account accountFrom = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(accountFrom.getAccountId())
-                .destination(UUID.randomUUID())
+                .from(accountFrom.getAccountNumber())
+                .destination("111111111111111")
                 .amount(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -883,8 +883,8 @@ public class AdminControllerTests {
         Account accountTo = testHelper.createOkAccount(AccountTypeEnum.CHECKING, 0);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(accountFrom.getAccountId())
-                .destination(accountTo.getAccountId())
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
                 .amount(BigDecimal.valueOf(52_000))
                 .build();
 
@@ -913,8 +913,8 @@ public class AdminControllerTests {
         Account accountTo = testHelper.createOkAccount(AccountTypeEnum.CHECKING, 0);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(accountFrom.getAccountId())
-                .destination(accountTo.getAccountId())
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
                 .amount(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -942,8 +942,8 @@ public class AdminControllerTests {
         Account accountTo = testHelper.createOkAccount(AccountTypeEnum.TIME_DEPOSIT, 12);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(accountFrom.getAccountId())
-                .destination(accountTo.getAccountId())
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
                 .amount(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -980,8 +980,8 @@ public class AdminControllerTests {
         trxTransferRepo.save(trxTransfer);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(accountFrom.getAccountId())
-                .destination(accountTo.getAccountId())
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
                 .amount(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -1018,8 +1018,8 @@ public class AdminControllerTests {
         trxTransferRepo.save(trxTransfer);
 
         TransferRequest transferRequest = TransferRequest.builder()
-                .from(accountFrom.getAccountId())
-                .destination(accountTo.getAccountId())
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
                 .amount(BigDecimal.valueOf(50_000))
                 .build();
 
