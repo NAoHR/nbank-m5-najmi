@@ -27,6 +27,7 @@ public class AuthController {
     public final ResponseEntity<Object> customerLogin(@RequestBody AuthCustomerRequest customerAuth){
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 WebResponse.< TokenResponse, NullType >builder()
+                        .message("Login Success")
                         .timestamp(LocalDateTime.now())
                         .data(authService.customerLogin(customerAuth))
                         .error(null)
@@ -48,6 +49,7 @@ public class AuthController {
     public final ResponseEntity<Object> accountLogin(@RequestBody AuthAccountRequest accountAuth){
         return ResponseEntity.status(HttpStatus.OK).body(
                 WebResponse.<TokenResponse, NullType>builder()
+                        .message("Login Success")
                         .timestamp(LocalDateTime.now())
                         .data(authService.accountLogin(accountAuth))
                         .error(null)

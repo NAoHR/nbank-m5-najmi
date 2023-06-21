@@ -58,10 +58,9 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public RegisterCustomerResponse registerCustomer(RegisterCustomerReq customerReq) {
         validatorService.validate(customerReq);
-        if(customerRepo.existsByEmail(customerReq.getEmail())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot Create User : Email Already Been Used");
+        if(customerRepo.existsByEmailOrIdentityNumber(customerReq.getEmail(), customerReq.getIdentityNumber())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot Create User : Email / Identity Number Has Already Been Used");
         }
-
 
 
         Customer customer = Customer.builder()

@@ -39,7 +39,7 @@ public class AccountHelper {
             LocalDateTime monthOkToDoTransaction = openTime.plusMonths(account.getDepositMonth());
 
             if(LocalDateTime.now().isBefore(monthOkToDoTransaction)){
-                throw new ItsTimeDepositAccountException("deposit", monthOkToDoTransaction.toString());
+                throw new ItsTimeDepositAccountException("transaction", monthOkToDoTransaction.toString());
             }
         }
     }

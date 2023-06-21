@@ -29,7 +29,7 @@ public class Customer {
     @Column(name="customer_id", nullable = false)
     private UUID customerId; // auto generate
 
-    @Column(name = "identity_number", nullable = false, length = 16)
+    @Column(name = "identity_number", nullable = false, length = 16, unique = true)
     @Pattern(regexp = "^[0-9]+$")
     private String identityNumber;
 
