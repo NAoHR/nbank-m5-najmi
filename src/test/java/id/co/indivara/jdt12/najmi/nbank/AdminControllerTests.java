@@ -68,6 +68,9 @@ public class AdminControllerTests {
 
     @Autowired
     private CustomerAuthRepo customerAuthRepo;
+
+    @Autowired
+    private AccountAuthRepo accountAuthRepo;
     @Autowired
     private TrxTransferRepo trxTransferRepo;
     @Autowired
@@ -84,6 +87,7 @@ public class AdminControllerTests {
     public void setup(){
         objectMapper.registerModule(new JavaTimeModule());
         customerAuthRepo.deleteAll();
+        accountAuthRepo.deleteAll();
         trxDepositRepo.deleteAll();
         trxWithdrawRepo.deleteAll();
         trxTransferRepo.deleteAll();

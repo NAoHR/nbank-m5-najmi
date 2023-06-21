@@ -51,6 +51,9 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private CustomerAuthRepo customerAuthRepo;
 
+    @Autowired
+    private AccountAuthRepo accountAuthRepo;
+
     @Override
     @Transactional
     public RegisterCustomerResponse registerCustomer(RegisterCustomerReq customerReq) {
@@ -122,7 +125,11 @@ public class AdminServiceImpl implements AdminService {
                 .openDate(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
 
-        accountRepo.save(account);
+        Account savedAccount = accountRepo.save(account);
+        accountAuthRepo.save(AccountAuth.builder()
+                        .account(savedAccount)
+                        .token(null)
+                .build());
 
         return RegisterAccountResponse.builder()
                 .accountId(account.getAccountId())
