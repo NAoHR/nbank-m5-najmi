@@ -45,32 +45,41 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public HashMap<String, Object> displayAccountTransactionActivity(String accountNumber, String transactionType) {
         Account account = accountRepo.findByAccountNumber(accountNumber).orElseThrow(AccountNotFoundException::new);
+        return displayAccountTransactionActivity(account, transactionType);
+    }
+
+
+    @Override
+    public HashMap<String, Object> displayAccountTransactionActivity(Account account, String transactionType) {
         HashMap<String, Object> maps = new HashMap<>();
+        HashMap<String, Object> subMap = new HashMap<>();
+        maps.put("account", account);
+
         switch (transactionType.toLowerCase()){
             case "transfer":
-                maps.put("transfer", accountHelper.transferActivity(trxTransferRepo.findAllByAccount(account)));
+                subMap.put("transfer", accountHelper.transferActivity(trxTransferRepo.findAllByAccount(account)));
                 break;
             case "deposit":
-                maps.put("deposit", trxDepositRepo.findAllByAccount(account));
+                subMap.put("deposit", trxDepositRepo.findAllByAccount(account));
                 break;
             case "withdraw":
-                maps.put("withdraw", trxWithdrawRepo.findAllByAccount(account));
+                subMap.put("withdraw", trxWithdrawRepo.findAllByAccount(account));
                 break;
             case "all":
-                maps.put("deposit", trxDepositRepo.findAllByAccount(account));
-                maps.put("withdraw", trxWithdrawRepo.findAllByAccount(account));
-                maps.put("transfer", accountHelper.transferActivity(trxTransferRepo.findAllByAccount(account)));
+                subMap.put("deposit", trxDepositRepo.findAllByAccount(account));
+                subMap.put("withdraw", trxWithdrawRepo.findAllByAccount(account));
+                subMap.put("transfer", accountHelper.transferActivity(trxTransferRepo.findAllByAccount(account)));
                 break;
             default:
                 throw new ValidActivityException();
         }
+        maps.put("transaction", subMap);
 
         return maps;
     }
 
     @Override
     public DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(String customerEmail) {
-        System.out.println(customerEmail);
         Customer customer = customerRepo.findByEmail(customerEmail).orElseThrow(CustomerNotFoundException::new);
         List<Account> accounts = accountRepo.findAllByCustomer(customer);
 
@@ -82,10 +91,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public TrxDeposit deposit(UUID accountId, BigDecimal amount, boolean isBankOrAdmin) {
+        Account account = accountRepo.findById(accountId).orElseThrow(AccountNotFoundException::new);
 
-        Account account = accountRepo.findById(accountId)
-                .orElseThrow(AccountNotFoundException::new);
+        return deposit(account, amount, isBankOrAdmin);
+    }
 
+    @Override
+    public TrxDeposit deposit(Account account, BigDecimal amount, boolean isBankOrAdmin) {
         accountHelper.checkAccountType(account);
         if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
 
@@ -105,10 +117,18 @@ public class AccountServiceImpl implements AccountService {
         return trxDeposit;
     }
 
+
+
     @Override
     public TrxWithdraw withdraw(UUID accountId, BigDecimal amount, boolean isBankOrAdmin) {
-        Account account = accountRepo.findById(accountId)
-                .orElseThrow(AccountNotFoundException::new);
+
+        Account account = accountRepo.findById(accountId).orElseThrow(AccountNotFoundException::new);
+
+        return withdraw(account, amount, isBankOrAdmin);
+    }
+
+    @Override
+    public TrxWithdraw withdraw(Account account, BigDecimal amount, boolean isBankOrAdmin) {
 
         accountHelper.checkAccountType(account);
         if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
@@ -132,13 +152,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public TrxTransferReferencedId transfer(UUID from, UUID to, BigDecimal money, boolean isBankOrAdmin) {
-        if(from.equals(to)){
+    public TrxTransferReferencedId transfer(String from, String to, BigDecimal money, boolean isBankOrAdmin) {
+        Account accountFrom = accountRepo.findByAccountNumber(from).orElseThrow(AccountNotFoundException::new);
+        return transfer(accountFrom, to, money, isBankOrAdmin);
+    }
+
+    @Override
+    public TrxTransferReferencedId transfer(Account accountFrom, String to, BigDecimal money, boolean isBankOrAdmin) {
+        if(accountFrom.getAccountNumber().equals(to)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Transfer : Can't transfer To Your Own Self");
         }
-        Account accountFrom = accountRepo.findById(from).orElseThrow(AccountNotFoundException::new);
-        Account accountTo = accountRepo.findById(to).orElseThrow(AccountNotFoundException::new);
 
+        Account accountTo = accountRepo.findByAccountNumber(to).orElseThrow(AccountNotFoundException::new);
 
         accountHelper.checkAccountType(accountFrom);
         accountHelper.checkAccountType(accountTo);
