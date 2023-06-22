@@ -15,12 +15,12 @@ public interface AccountService {
     HashMap<String, Object> displayAccountTransactionActivity(Account account, String transactionType);
 
     DisplayCustomerAndAllAccountsResponse displayCustomerAndAllAccounts(String customerEmail);
-    TrxDeposit deposit(UUID accountId, BigDecimal amount, boolean isWithBankOrAdmin);
-    TrxDeposit deposit(Account account, BigDecimal decimal, boolean isWithBankOrAdmin);
+    TrxDeposit deposit(UUID accountId, BigDecimal amount, boolean isMultipleOf5k);
+    TrxDeposit deposit(Account account, BigDecimal decimal, boolean isMultipleOf5k);
 
-    TrxWithdraw withdraw(UUID accountId, BigDecimal amount, boolean isBankOrAdmin);
-    TrxWithdraw withdraw(Account account, BigDecimal amount, boolean isBankOrAdmin);
+    TrxWithdraw withdraw(UUID accountId, BigDecimal amount, boolean isMultipleOf5k);
+    TrxWithdraw withdraw(Account account, BigDecimal amount, boolean isMultipleOf5k);
 
-    TrxTransferReferencedId transfer(String from, String to, BigDecimal money, boolean isBankOrAdmin);
-    TrxTransferReferencedId transfer(Account account, String to, BigDecimal money, boolean isBankOrAdmin);
+    TrxTransferReferencedId transfer(String from, String to, BigDecimal money, boolean isMultipleOf5k);
+    TrxTransferReferencedId transfer(Account account, String to, BigDecimal money, boolean isMultipleOf5k);
 }
