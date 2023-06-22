@@ -20,11 +20,16 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(customerSecurityInterceptor)
                 .addPathPatterns("/api/auth/customer/logout")
+                .addPathPatterns("/api/app/**")
+                .excludePathPatterns("/api/app/transfer")
+                .excludePathPatterns("/api/app/customer/account/detail")
         ;
 
         registry.addInterceptor(accountSecurityInterceptor)
                 .addPathPatterns("/api/auth/account/logout")
                 .addPathPatterns("/api/atm/**")
+                .addPathPatterns("/api/app/transfer")
+                .addPathPatterns("/api/app/customer/account/detail")
         ;
     }
 }
