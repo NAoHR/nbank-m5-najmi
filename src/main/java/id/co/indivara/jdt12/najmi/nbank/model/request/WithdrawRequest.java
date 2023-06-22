@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class WithdrawRequest {
     @NotNull
-    private UUID uid;
+    private String accountNumber;
     @NotNull
     private BigDecimal money;
 }

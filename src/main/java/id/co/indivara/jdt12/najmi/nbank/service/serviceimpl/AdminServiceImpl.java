@@ -154,16 +154,18 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public TrxDeposit depositToAnAccount(DepositRequest depo) {
+        Account account = accountRepo.findByAccountNumber(depo.getAccountNumber()).orElseThrow(AccountNotFoundException::new);
         validatorService.validate(depo);
-        return accountService.deposit(depo.getUid(), depo.getMoney(), true);
+        return accountService.deposit(account, depo.getMoney(), true);
 
     }
 
     @Override
     @Transactional
     public TrxWithdraw withdrawFromAnAccount(WithdrawRequest wd) {
+        Account account = accountRepo.findByAccountNumber(wd.getAccountNumber()).orElseThrow(AccountNotFoundException::new);
         validatorService.validate(wd);
-        return accountService.withdraw(wd.getUid(), wd.getMoney(), true);
+        return accountService.withdraw(account, wd.getMoney(), true);
 
     }
 

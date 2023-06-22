@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DepositRequest {
     @NotNull
-    private UUID uid;
+    private String accountNumber;
     @NotNull
     @Min(0)
     private BigDecimal money;

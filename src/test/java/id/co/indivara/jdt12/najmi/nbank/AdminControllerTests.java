@@ -128,7 +128,7 @@ public class AdminControllerTests {
      * 6. Transfer
      *  6.1 transfer failed because accountFrom not found
      *  6.2 transfer failed because destination not found
-     *  6.3 transfer failed because money not a multiple of 5k
+     *  6.3 transfer failed because money not a multiple of 50k
      *  6.4 transfer failed because accountFrom is a time deposit account
      *  6.7 transfer failed because destination is a time deposit account
      *  6.8 transfer failed because exceeding transaction is passed
@@ -421,7 +421,7 @@ public class AdminControllerTests {
     public void withdrawSuccessTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         WithdrawRequest transferRequest = WithdrawRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(50_000))
                 .build();
         mockMvc.perform(
@@ -446,7 +446,7 @@ public class AdminControllerTests {
     @Test
     public void WithdrawFailedAccountNotFoundTest() throws Exception{
         WithdrawRequest transferRequest = WithdrawRequest.builder()
-                .uid(UUID.randomUUID())
+                .accountNumber("123456789012345")
                 .money(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -472,7 +472,7 @@ public class AdminControllerTests {
     public void withdrawFailedNotMultpleOf50k() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         WithdrawRequest transferRequest = WithdrawRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(53_000))
                 .build();
         mockMvc.perform(
@@ -496,7 +496,7 @@ public class AdminControllerTests {
     public void withdrawFailedMinimumMoneyInBalanceTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         WithdrawRequest transferRequest = WithdrawRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(500_000))
                 .build();
         mockMvc.perform(
@@ -520,7 +520,7 @@ public class AdminControllerTests {
     public void withdrawFailedToTimeDepositTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.TIME_DEPOSIT, 12);
         WithdrawRequest transferRequest = WithdrawRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(500_000))
                 .build();
         mockMvc.perform(
@@ -553,7 +553,7 @@ public class AdminControllerTests {
         trxWithdrawRepo.save(trxWithdraw);
 
         WithdrawRequest witdrawRequest = WithdrawRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(1_000_000))
                 .build();
 
@@ -588,7 +588,7 @@ public class AdminControllerTests {
         trxWithdrawRepo.save(trxWithdraw);
 
         WithdrawRequest witdrawRequest = WithdrawRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(1_000_000))
                 .build();
 
@@ -613,7 +613,7 @@ public class AdminControllerTests {
     public void depositSuccessTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         DepositRequest depositRequest = DepositRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(50_000))
                 .build();
         mockMvc.perform(
@@ -639,7 +639,7 @@ public class AdminControllerTests {
     public void depositFailedAccountNotFoundTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         DepositRequest depositRequest = DepositRequest.builder()
-                .uid(UUID.randomUUID())
+                .accountNumber("123456789012345")
                 .money(BigDecimal.valueOf(50_000))
                 .build();
         mockMvc.perform(
@@ -664,7 +664,7 @@ public class AdminControllerTests {
     public void depositFailedAccountNotAMultipleOf50KTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         DepositRequest depositRequest = DepositRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(55_000))
                 .build();
         mockMvc.perform(
@@ -690,7 +690,7 @@ public class AdminControllerTests {
     public void depositFailedToTimeDepositAccountTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.TIME_DEPOSIT, 12);
         DepositRequest depositRequest = DepositRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(50_000))
                 .build();
         mockMvc.perform(
@@ -725,7 +725,7 @@ public class AdminControllerTests {
         trxDepositRepo.save(trxDeposit);
 
         DepositRequest depositRequest = DepositRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -762,7 +762,7 @@ public class AdminControllerTests {
         trxDepositRepo.save(trxDeposit);
 
         DepositRequest depositRequest = DepositRequest.builder()
-                .uid(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
                 .money(BigDecimal.valueOf(50_000))
                 .build();
 
