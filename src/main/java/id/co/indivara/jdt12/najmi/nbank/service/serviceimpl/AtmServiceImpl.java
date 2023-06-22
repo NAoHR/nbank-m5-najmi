@@ -3,16 +3,16 @@ package id.co.indivara.jdt12.najmi.nbank.service.serviceimpl;
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxDeposit;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxWithdraw;
-import id.co.indivara.jdt12.najmi.nbank.enums.TransactionTypeEnum;
+import id.co.indivara.jdt12.najmi.nbank.exception.MinimumIs5KException;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmDepositWithdrawRequest;
-import id.co.indivara.jdt12.najmi.nbank.model.request.AtmTransferRequest;
-import id.co.indivara.jdt12.najmi.nbank.repo.AccountRepo;
+import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.AtmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 @Service
@@ -43,8 +43,9 @@ public class AtmServiceImpl implements AtmService {
     }
 
     @Override
-    public TrxTransferReferencedId transferViaAtm(Account account, AtmTransferRequest transferRequest) {
+    public TrxTransferReferencedId transferViaAtm(Account account, AtmAndAppTransferRequest transferRequest) {
         validatorService.validate(transferRequest);
-        return accountService.transfer(account, transferRequest.getDestination(), transferRequest.getAmount(), true);
+        if(transferRequest.getAmount().compareTo(BigDecimal.valueOf(5_000)) < 0) throw new MinimumIs5KException();
+        return accountService.transfer(account, transferRequest.getDestination(), transferRequest.getAmount(), false);
     }
 }

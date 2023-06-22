@@ -2,7 +2,7 @@ package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmDepositWithdrawRequest;
-import id.co.indivara.jdt12.najmi.nbank.model.request.AtmTransferRequest;
+import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.service.AtmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +66,7 @@ public class AtmController {
     @PostMapping("/transaction/transfer")
     public final ResponseEntity<Object> transferAtm(
             @RequestAttribute("account") Account account,
-            @RequestBody AtmTransferRequest atmTransferRequest
+            @RequestBody AtmAndAppTransferRequest atmTransferRequest
             ){
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 WebResponse.builder()

@@ -8,13 +8,12 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtmTransferRequest {
+public class AtmAndAppTransferRequest {
     @NotNull
     private String destination;
     @NotNull
