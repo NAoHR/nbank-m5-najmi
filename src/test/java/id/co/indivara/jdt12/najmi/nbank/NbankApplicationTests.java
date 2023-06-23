@@ -1,13 +1,19 @@
 package id.co.indivara.jdt12.najmi.nbank;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NbankApplicationTests {
+@RunWith(Suite.class)
 
-	@Test
-	void contextLoads() {
-	}
+@Suite.SuiteClasses({
+		AdminControllerTests.class,
+		AtmControllerTests.class,
+		AuthControllerTests.class,
+		AtmControllerTests.class
+})
+class NbankApplicationTests {
 
 }
