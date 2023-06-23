@@ -23,7 +23,7 @@ public class AtmController {
             @RequestParam(value = "type", required = false, defaultValue = "all") String type,
             @RequestAttribute("account") Account account
     ){
-        return ResponseEntity.status(HttpStatus.CREATED).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 WebResponse.builder()
                         .message("Displayed")
                         .timestamp(LocalDateTime.now())
