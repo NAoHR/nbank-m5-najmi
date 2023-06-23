@@ -3,6 +3,7 @@ package id.co.indivara.jdt12.najmi.nbank.service.helper;
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxTransfer;
 import id.co.indivara.jdt12.najmi.nbank.enums.AccountTypeEnum;
+import id.co.indivara.jdt12.najmi.nbank.enums.StatusEnum;
 import id.co.indivara.jdt12.najmi.nbank.enums.TransactionTypeEnum;
 import id.co.indivara.jdt12.najmi.nbank.exception.*;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
@@ -31,6 +32,12 @@ public class AccountHelper {
 
     @Autowired
     private TrxWithdrawRepo trxWithdrawRepo;
+
+    public final void checkAccountStatus(Account account){
+        if(!account.getStatus().equals(StatusEnum.ACTIVE)){
+            throw new AccountIsNotActiveException();
+        }
+    }
 
 
     public final void checkAccountType(Account account){

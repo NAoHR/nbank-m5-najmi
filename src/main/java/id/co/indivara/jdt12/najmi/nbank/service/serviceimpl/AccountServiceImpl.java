@@ -98,7 +98,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public TrxDeposit deposit(Account account, BigDecimal amount, boolean isBankOrAdmin) {
+
+        accountHelper.checkAccountStatus(account);
         accountHelper.checkAccountType(account);
+
         if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
 
         accountHelper.exceedingAmountOfTransaction(account, TransactionTypeEnum.DEPOSIT, amount);
@@ -130,7 +133,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public TrxWithdraw withdraw(Account account, BigDecimal amount, boolean isBankOrAdmin) {
 
+        accountHelper.checkAccountStatus(account);
         accountHelper.checkAccountType(account);
+
         if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
         accountHelper.exceedingAmountOfTransaction(account, TransactionTypeEnum.WITHDRAW, amount);
 
@@ -164,6 +169,9 @@ public class AccountServiceImpl implements AccountService {
         }
 
         Account accountTo = accountRepo.findByAccountNumber(to).orElseThrow(AccountNotFoundException::new);
+
+        accountHelper.checkAccountStatus(accountFrom);
+        accountHelper.checkAccountStatus(accountTo);
 
         accountHelper.checkAccountType(accountFrom);
         accountHelper.checkAccountType(accountTo);
