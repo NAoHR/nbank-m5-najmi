@@ -109,6 +109,7 @@ public class AdminControllerTests {
      *  3.1 display customer's accounts failed - done
      *
      * 4. Withdraw - done
+     *  4.0 withdraw failed because the account is not active - done
      *  4.1 withdraw failed because account not found - done
      *  4.2 withdraw failed because money not a multple of 50k - done
      *  4.3 withdraw failed because money in the bank below minimal balance - done
@@ -118,6 +119,7 @@ public class AdminControllerTests {
      *    4.5.1 checking - done
      *
      * 5. Deposit - done
+     *  5.0 deposit failed because the account is not active - done
      *  5.1 deposit failed because account not found - done
      *  5.2 deposit failed because money not a multple of 50k - done
      *  5.3 deposit failed because it's time deposit account - done
@@ -126,14 +128,16 @@ public class AdminControllerTests {
      *    5.4.2 checking - done
      *
      * 6. Transfer
-     *  6.1 transfer failed because accountFrom not found
-     *  6.2 transfer failed because destination not found
-     *  6.3 transfer failed because money not a multiple of 50k
-     *  6.4 transfer failed because accountFrom is a time deposit account
-     *  6.7 transfer failed because destination is a time deposit account
-     *  6.8 transfer failed because exceeding transaction is passed
-     *    6.8.1 saving
-     *    6.8.1 checking
+     *  4.1 withdraw failed because the account from is not active - done
+     *  4.2 withdraw failed because the account to is not active - done
+     *  6.3 transfer failed because accountFrom not found - done
+     *  6.4 transfer failed because destination not found - done
+     *  6.5 transfer failed because money not a multiple of 50k - done
+     *  6.6 transfer failed because accountFrom is a time deposit account - done
+     *  6.7 transfer failed because destination is a time deposit account - done
+     *  6.8 transfer failed because exceeding transaction is passed - done
+     *    6.8.1 saving - done
+     *    6.8.1 checking - done
      */
     @Test
     public void registerSuccessTest() throws Exception {
@@ -444,6 +448,32 @@ public class AdminControllerTests {
     }
 
     @Test
+    public void withdrawFailedAccountIsNotActive() throws Exception{
+        Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0, StatusEnum.SUSPENDED);
+        WithdrawRequest transferRequest = WithdrawRequest.builder()
+                .accountNumber("123456789012345")
+                .money(BigDecimal.valueOf(50_000))
+                .build();
+
+        mockMvc.perform(
+                post("/api/admin/transaction/withdraw")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("nbankadmin:password".getBytes()))
+                        .content(objectMapper.writeValueAsString(transferRequest))
+        ).andExpectAll(
+                status().isBadRequest()
+        ).andDo(result -> {
+            WebResponse< NullType, Object > response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<NullType, Object>>() {});
+            log.info(String.valueOf(response));
+
+            Assertions.assertNotNull(response.getError());
+            Assertions.assertNull(response.getData());
+            log.info(String.valueOf(response));
+        });
+    }
+
+    @Test
     public void WithdrawFailedAccountNotFoundTest() throws Exception{
         WithdrawRequest transferRequest = WithdrawRequest.builder()
                 .accountNumber("123456789012345")
@@ -636,6 +666,32 @@ public class AdminControllerTests {
     }
 
     @Test
+    public void depositFailedAccountIsNotActive() throws Exception{
+        Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0, StatusEnum.SUSPENDED);
+        WithdrawRequest transferRequest = WithdrawRequest.builder()
+                .accountNumber("123456789012345")
+                .money(BigDecimal.valueOf(50_000))
+                .build();
+
+        mockMvc.perform(
+                post("/api/admin/transaction/deposit")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("nbankadmin:password".getBytes()))
+                        .content(objectMapper.writeValueAsString(transferRequest))
+        ).andExpectAll(
+                status().isBadRequest()
+        ).andDo(result -> {
+            WebResponse< NullType, Object > response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<NullType, Object>>() {});
+            log.info(String.valueOf(response));
+
+            Assertions.assertNotNull(response.getError());
+            Assertions.assertNull(response.getData());
+            log.info(String.valueOf(response));
+        });
+    }
+
+    @Test
     public void depositFailedAccountNotFoundTest() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
         DepositRequest depositRequest = DepositRequest.builder()
@@ -817,6 +873,61 @@ public class AdminControllerTests {
             Assertions.assertNull(response.getError());
         });
 
+    }
+    @Test
+    public void transferFailedAccountIsNotActive() throws Exception{
+        Account accountFrom = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0, StatusEnum.SUSPENDED);
+        Account accountTo = testHelper.createOkAccount(AccountTypeEnum.CHECKING, 0);
+
+        TransferRequest transferRequest = TransferRequest.builder()
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
+                .amount(BigDecimal.valueOf(50_000))
+                .build();
+
+        mockMvc.perform(
+                post("/api/admin/transaction/transfer")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("nbankadmin:password".getBytes()))
+                        .content(objectMapper.writeValueAsString(transferRequest))
+        ).andExpectAll(
+                status().isBadRequest()
+        ).andDo(result -> {
+            WebResponse< NullType, Object > response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<NullType, Object>>() {});
+            log.info(String.valueOf(response));
+
+            Assertions.assertNotNull(response.getError());
+            Assertions.assertNull(response.getData());
+        });
+    }
+
+    @Test
+    public void transferFailedDestinationAccountIsNotActive() throws Exception{
+        Account accountFrom = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
+        Account accountTo = testHelper.createOkAccount(AccountTypeEnum.CHECKING, 0, StatusEnum.SUSPENDED);
+
+        TransferRequest transferRequest = TransferRequest.builder()
+                .from(accountFrom.getAccountNumber())
+                .destination(accountTo.getAccountNumber())
+                .amount(BigDecimal.valueOf(50_000))
+                .build();
+
+        mockMvc.perform(
+                post("/api/admin/transaction/transfer")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("nbankadmin:password".getBytes()))
+                        .content(objectMapper.writeValueAsString(transferRequest))
+        ).andExpectAll(
+                status().isBadRequest()
+        ).andDo(result -> {
+            WebResponse< NullType, Object > response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<NullType, Object>>() {});
+            log.info(String.valueOf(response));
+
+            Assertions.assertNotNull(response.getError());
+            Assertions.assertNull(response.getData());
+        });
     }
 
     @Test

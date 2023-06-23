@@ -118,6 +118,31 @@ public class TestHelper {
         accountAuthRepo.save(accountAuth);
         return account;
     }
+
+    public final Account createOkAccount(AccountTypeEnum accountType, Integer month,StatusEnum status){ // default
+        BigDecimal balance = BigDecimal.valueOf(accountType.equals(AccountTypeEnum.SAVINGS) ? 500_000 : accountType.equals(AccountTypeEnum.TIME_DEPOSIT) ? 8_000_000 : 0);
+
+        Account account = Account.builder()
+                .accountId(UUID.randomUUID())
+                .customer(createOkCustomer())
+                .accountNumber(accountCustomerHelper.generateAccountNumber())
+                .password(BCrypt.hashpw("123456", BCrypt.gensalt()))
+                .status(status)
+                .accountType(accountType)
+                .balance(balance)
+                .depositMonth(month)
+                .openDate(Timestamp.valueOf(LocalDateTime.now()))
+                .build();
+
+
+        AccountAuth accountAuth = AccountAuth.builder()
+                .token(null)
+                .account(accountRepo.save(account))
+                .build();
+
+        accountAuthRepo.save(accountAuth);
+        return account;
+    }
     public final Account createOkAccount(AccountTypeEnum accountType, Integer month, BigDecimal money){ // money
 
         Account account = Account.builder()
