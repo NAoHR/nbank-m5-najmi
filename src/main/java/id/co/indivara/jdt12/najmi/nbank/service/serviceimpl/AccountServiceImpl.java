@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -97,6 +98,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public TrxDeposit deposit(Account account, BigDecimal amount, boolean isBankOrAdmin) {
 
         accountHelper.checkAccountStatus(account);
@@ -131,6 +133,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public TrxWithdraw withdraw(Account account, BigDecimal amount, boolean isBankOrAdmin) {
 
         accountHelper.checkAccountStatus(account);
@@ -163,6 +166,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public TrxTransferReferencedId transfer(Account accountFrom, String to, BigDecimal money, boolean isBankOrAdmin) {
         if(accountFrom.getAccountNumber().equals(to)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Transfer : Can't transfer To Your Own Self");
