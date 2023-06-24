@@ -2,11 +2,9 @@ package id.co.indivara.jdt12.najmi.nbank.service;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
-import id.co.indivara.jdt12.najmi.nbank.entity.CustomerAuth;
 import id.co.indivara.jdt12.najmi.nbank.model.request.account.AuthAccountRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.customer.AuthCustomerRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.TokenResponse;
-import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 
 import javax.lang.model.type.NullType;
 

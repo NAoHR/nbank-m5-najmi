@@ -2,7 +2,6 @@ package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
-import id.co.indivara.jdt12.najmi.nbank.entity.CustomerAuth;
 import id.co.indivara.jdt12.najmi.nbank.model.request.account.AuthAccountRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.customer.AuthCustomerRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.TokenResponse;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.lang.model.type.NullType;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @RestController

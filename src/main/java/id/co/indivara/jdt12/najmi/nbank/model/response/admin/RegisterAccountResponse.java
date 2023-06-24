@@ -1,7 +1,5 @@
 package id.co.indivara.jdt12.najmi.nbank.model.response.admin;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
 import id.co.indivara.jdt12.najmi.nbank.enums.AccountTypeEnum;
 import id.co.indivara.jdt12.najmi.nbank.enums.StatusEnum;
 import lombok.AllArgsConstructor;
@@ -9,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;

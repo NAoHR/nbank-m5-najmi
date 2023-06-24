@@ -1,7 +1,6 @@
 package id.co.indivara.jdt12.najmi.nbank;
 
 import id.co.indivara.jdt12.najmi.nbank.security.AccountSecurityInterceptor;
-import id.co.indivara.jdt12.najmi.nbank.security.AdminSecurity;
 import id.co.indivara.jdt12.najmi.nbank.security.CustomerSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
