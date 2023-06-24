@@ -4,8 +4,6 @@ import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.AccountAuth;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 
 public interface AccountAuthRepo extends JpaRepository<AccountAuth, Long> {
     AccountAuth findByAccount(Account account);

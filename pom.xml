@@ -99,6 +99,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>nbank</finalName>
 	</build>
-
+	<packaging>war</packaging>
 </project>

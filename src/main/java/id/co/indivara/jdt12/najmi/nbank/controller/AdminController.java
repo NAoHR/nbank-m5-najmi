@@ -1,7 +1,6 @@
 package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxDeposit;
-import id.co.indivara.jdt12.najmi.nbank.entity.TrxTransfer;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxWithdraw;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.DepositRequest;
@@ -20,17 +19,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.lang.model.type.NullType;
-import javax.websocket.server.PathParam;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
 
     @PostMapping("/registercustomer")
     public ResponseEntity<Object> registerCustomer(@RequestBody RegisterCustomerReq customerReq){

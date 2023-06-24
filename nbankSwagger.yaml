@@ -1,0 +1,1734 @@
+openapi: 3.0.0
+info:
+  title: nbank
+  contact: {}
+  version: '1.0'
+servers:
+  - url: http://localhost:8080/api
+    variables: {}
+paths:
+  /admin/registercustomer:
+    post:
+      tags:
+        - admin
+      summary: registerCustomer
+      operationId: registerCustomer
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/registerCustomerRequest'
+                - example:
+                    identityNumber: '1234567890123459'
+                    firstName: John
+                    lastName: Doe
+                    phoneNumber: '123456780'
+                    email: waduh2@gmail.com
+                    dob: 2004-07-20
+                    address: 123 Main Street
+                    occupation: Engineer
+                    income: 50000
+                    maritalStatus: SINGLE
+                    highestEducation: BACHELORS_DEGREE
+                    password: Password123
+            example:
+              identityNumber: '1234567890123459'
+              firstName: John
+              lastName: Doe
+              phoneNumber: '123456780'
+              email: waduh2@gmail.com
+              dob: 2004-07-20
+              address: 123 Main Street
+              occupation: Engineer
+              income: 50000
+              maritalStatus: SINGLE
+              highestEducation: BACHELORS_DEGREE
+              password: Password123
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-constraintviolation1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T02:47:48.8083657
+                      data: null
+                      error:
+                        name: Constraints Violations
+                        detail:
+                          - occupation must not be null
+                          - address must not be null
+                          - maritalStatus must not be null
+                          - password must not be null
+                          - email must not be null
+                          - highestEducation must not be null
+                          - phoneNumber must not be null
+                          - identityNumber must not be null
+                          - firstName must not be null
+                          - dob must not be null
+                          - income must not be null
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T02:47:48.8083657
+                data: null
+                error:
+                  name: Constraints Violations
+                  detail:
+                    - occupation must not be null
+                    - address must not be null
+                    - maritalStatus must not be null
+                    - password must not be null
+                    - email must not be null
+                    - highestEducation must not be null
+                    - phoneNumber must not be null
+                    - identityNumber must not be null
+                    - firstName must not be null
+                    - dob must not be null
+                    - income must not be null
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAuthorized1'
+                  - example:
+                      timestamp: 2023-06-24T19:51:41.424+00:00
+                      status: 401
+                      error: Unauthorized
+                      path: /api/admin/registercustomer
+              example:
+                timestamp: 2023-06-24T19:51:41.424+00:00
+                status: 401
+                error: Unauthorized
+                path: /api/admin/registercustomer
+      deprecated: false
+      security:
+        - basic: []
+  /admin/registeraccount:
+    post:
+      tags:
+        - admin
+      summary: registerAccount
+      operationId: registerAccount
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/registerAccountRequest'
+                - example:
+                    accountPassword: '123456'
+                    status: ACTIVE
+                    accountType: CHECKING
+                    balance: 1000000
+                    customerId: 620771e1-cdee-4180-839e-30c1c7bf20ec
+                    depositMonth: 6
+            example:
+              accountPassword: '123456'
+              status: ACTIVE
+              accountType: CHECKING
+              balance: 1000000
+              customerId: 620771e1-cdee-4180-839e-30c1c7bf20ec
+              depositMonth: 6
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-constraintviolation1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T02:52:37.28
+                      data: null
+                      error:
+                        name: Constraints Violations
+                        detail:
+                          - customerId must not be null
+                          - status must not be null
+                          - accountPassword must not be null
+                          - accountType must not be null
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T02:52:37.28
+                data: null
+                error:
+                  name: Constraints Violations
+                  detail:
+                    - customerId must not be null
+                    - status must not be null
+                    - accountPassword must not be null
+                    - accountType must not be null
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAuthorized1'
+                  - example:
+                      timestamp: 2023-06-24T19:51:41.424+00:00
+                      status: 401
+                      error: Unauthorized
+                      path: /api/admin/registercustomer
+              example:
+                timestamp: 2023-06-24T19:51:41.424+00:00
+                status: 401
+                error: Unauthorized
+                path: /api/admin/registercustomer
+      deprecated: false
+      security:
+        - basic: []
+  /admin/customer/waduh2@gmail.com:
+    get:
+      tags:
+        - admin
+      summary: accounts
+      operationId: accounts
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAuthorized1'
+                  - example:
+                      timestamp: 2023-06-24T19:51:41.424+00:00
+                      status: 401
+                      error: Unauthorized
+                      path: /api/admin/registercustomer
+              example:
+                timestamp: 2023-06-24T19:51:41.424+00:00
+                status: 401
+                error: Unauthorized
+                path: /api/admin/registercustomer
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-CustomerNotFound1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T02:56:50.398
+                      data: null
+                      error:
+                        name: Customer Not Found
+                        detail: Customer you are refering to could not be found
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T02:56:50.398
+                data: null
+                error:
+                  name: Customer Not Found
+                  detail: Customer you are refering to could not be found
+      deprecated: false
+      security:
+        - basic: []
+  /admin/customer/062503485395532/transaction:
+    get:
+      tags:
+        - admin
+      summary: Activity
+      operationId: Activity
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAuthorized1'
+                  - example:
+                      timestamp: 2023-06-24T19:51:41.424+00:00
+                      status: 401
+                      error: Unauthorized
+                      path: /api/admin/registercustomer
+              example:
+                timestamp: 2023-06-24T19:51:41.424+00:00
+                status: 401
+                error: Unauthorized
+                path: /api/admin/registercustomer
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-AccountNotFound1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T02:57:39.046
+                      data: null
+                      error:
+                        name: Account Not Found
+                        detail: Account you are refering to could not be found
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T02:57:39.046
+                data: null
+                error:
+                  name: Account Not Found
+                  detail: Account you are refering to could not be found
+      deprecated: false
+      security:
+        - basic: []
+  /admin/transaction/deposit:
+    post:
+      tags:
+        - admin
+      summary: Deposit
+      operationId: Deposit
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/DepositRequest'
+                - example:
+                    accountNumber: '062503485239831'
+                    money: 14000000
+            example:
+              accountNumber: '062503485239831'
+              money: 14000000
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-AccountNotFound1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T02:55:12.309
+                      data: null
+                      error:
+                        name: Account Not Found
+                        detail: Account you are refering to could not be found
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T02:55:12.309
+                data: null
+                error:
+                  name: Account Not Found
+                  detail: Account you are refering to could not be found
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAuthorized1'
+                  - example:
+                      timestamp: 2023-06-24T19:51:41.424+00:00
+                      status: 401
+                      error: Unauthorized
+                      path: /api/admin/registercustomer
+              example:
+                timestamp: 2023-06-24T19:51:41.424+00:00
+                status: 401
+                error: Unauthorized
+                path: /api/admin/registercustomer
+      deprecated: false
+      security:
+        - basic: []
+  /admin/transaction/withdraw:
+    post:
+      tags:
+        - admin
+      summary: withdraw
+      operationId: withdraw
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/withdrawrequest'
+                - example:
+                    accountNumber: '062503485239831'
+                    money: 10000000
+            example:
+              accountNumber: '062503485239831'
+              money: 10000000
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-AccountNotFound1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:06:42.838
+                      data: null
+                      error:
+                        name: Account Not Found
+                        detail: Account you are refering to could not be found
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:06:42.838
+                data: null
+                error:
+                  name: Account Not Found
+                  detail: Account you are refering to could not be found
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAuthorized1'
+                  - example:
+                      timestamp: 2023-06-24T19:51:41.424+00:00
+                      status: 401
+                      error: Unauthorized
+                      path: /api/admin/registercustomer
+              example:
+                timestamp: 2023-06-24T19:51:41.424+00:00
+                status: 401
+                error: Unauthorized
+                path: /api/admin/registercustomer
+      deprecated: false
+      security:
+        - basic: []
+  /admin/transaction/transfer:
+    post:
+      tags:
+        - admin
+      summary: Transfer
+      operationId: Transfer
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/TransferRequest'
+                - example:
+                    from: '062503485395532'
+                    destination: '062503485239831'
+                    amount: 50000
+            example:
+              from: '062503485395532'
+              destination: '062503485239831'
+              amount: 50000
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-AccountFromFound1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:06:42.838
+                      data: null
+                      error:
+                        name: Account Not Found
+                        detail: Account you are refering to could not be found
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:06:42.838
+                data: null
+                error:
+                  name: Account Not Found
+                  detail: Account you are refering to could not be found
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAtuhorized1'
+                  - example:
+                      timestamp: 2023-06-24T19:51:41.424+00:00
+                      status: 401
+                      error: Unauthorized
+                      path: /api/admin/registercustomer
+              example:
+                timestamp: 2023-06-24T19:51:41.424+00:00
+                status: 401
+                error: Unauthorized
+                path: /api/admin/registercustomer
+      deprecated: false
+      security:
+        - basic: []
+  /auth/customer/login:
+    post:
+      tags:
+        - auth
+      summary: Customer Login
+      operationId: CustomerLogin
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CustomerLoginRequest'
+                - example:
+                    email: waduh2@gmail.com
+                    password: Password123
+            example:
+              email: waduh2@gmail.com
+              password: Password123
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-CustomerNotFound1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:16:43.851
+                      data: null
+                      error:
+                        name: Customer Not Found
+                        detail: Customer you are refering to could not be found
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:16:43.851
+                data: null
+                error:
+                  name: Customer Not Found
+                  detail: Customer you are refering to could not be found
+      deprecated: false
+  /auth/customer/logout:
+    delete:
+      tags:
+        - auth
+      summary: Customer Logout
+      operationId: CustomerLogout
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+      deprecated: false
+      security:
+        - bearer: []
+  /auth/account/login:
+    post:
+      tags:
+        - auth
+      summary: Account Login
+      operationId: AccountLogin
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/AccountLoginRequest'
+                - example:
+                    acid: 678679e5-fa35-48a5-a2af-a73e30de3cae
+                    pin: '123456'
+            example:
+              acid: 678679e5-fa35-48a5-a2af-a73e30de3cae
+              pin: '123456'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-AccountNotFound1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:20:57.824
+                      data: null
+                      error:
+                        name: Account Not Found
+                        detail: Account you are refering to could not be found
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:20:57.824
+                data: null
+                error:
+                  name: Account Not Found
+                  detail: Account you are refering to could not be found
+      deprecated: false
+  /auth/account/logout:
+    delete:
+      tags:
+        - auth
+      summary: Account Logout
+      operationId: AccountLogout
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+      deprecated: false
+      security:
+        - bearer: []
+  /atm/transaction/activity:
+    get:
+      tags:
+        - atm
+      summary: Transaction Activity
+      operationId: TransactionActivity
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+      deprecated: false
+  /atm/transaction/deposit:
+    post:
+      tags:
+        - atm
+      summary: Deposit
+      operationId: PostDeposit
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/DepositRequest1'
+                - example:
+                    money: 50000
+            example:
+              money: 50000
+        required: true
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-ExceedingAmount1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:02:56.156
+                      data: null
+                      error:
+                        name: Exceeding Amount
+                        detail: You have Passed Daily Maximum DEPOSIT Transaction
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:02:56.156
+                data: null
+                error:
+                  name: Exceeding Amount
+                  detail: You have Passed Daily Maximum DEPOSIT Transaction
+      deprecated: false
+  /atm/transaction/transfer:
+    post:
+      tags:
+        - atm
+      summary: Transfer
+      operationId: PostTransfer
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/TransferRequest1'
+                - example:
+                    amount: 50000
+                    destination: '062503485239831'
+            example:
+              amount: 50000
+              destination: '062503485239831'
+        required: true
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UnAtuhorized3'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-ExceedingAmount1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:02:56.156
+                      data: null
+                      error:
+                        name: Exceeding Amount
+                        detail: You have Passed Daily Maximum TRANSFER Transaction
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:02:56.156
+                data: null
+                error:
+                  name: Exceeding Amount
+                  detail: You have Passed Daily Maximum TRANSFER Transaction
+      deprecated: false
+  /atm/transaction/withdraw:
+    post:
+      tags:
+        - atm
+      summary: Withdraw
+      operationId: Withdraw
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/WithdrawRequest1'
+                - example:
+                    money: 50000
+            example:
+              money: 50000
+        required: true
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-ExceedingAmount1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:02:56.156
+                      data: null
+                      error:
+                        name: Exceeding Amount
+                        detail: You have Passed Daily Maximum  WITHDRAW Transaction
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:02:56.156
+                data: null
+                error:
+                  name: Exceeding Amount
+                  detail: You have Passed Daily Maximum  WITHDRAW Transaction
+      deprecated: false
+  /app/customer:
+    get:
+      tags:
+        - App
+      summary: Display Customer (CJWT)
+      operationId: DisplayCustomer(CJWT)
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+      deprecated: false
+      security:
+        - bearer: []
+  /app/customer/accounts:
+    get:
+      tags:
+        - App
+      summary: Display All Account (CJWT)
+      operationId: DisplayAllAccount(CJWT)
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+      deprecated: false
+      security:
+        - bearer: []
+  /app/customer/account/detail:
+    get:
+      tags:
+        - App
+      summary: Account Detail (AJWT)
+      operationId: AccountDetail(AJWT)
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Unauthorized13'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:19:54.58
+                      data: null
+                      error:
+                        name: Session Expired
+                        detail: Please Login Again
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:19:54.58
+                data: null
+                error:
+                  name: Session Expired
+                  detail: Please Login Again
+      deprecated: false
+      security:
+        - bearer: []
+  /app/transfer:
+    post:
+      tags:
+        - App
+      summary: Transfer (AJWT)
+      operationId: Transfer(AJWT)
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/TransferAJWTRequest'
+                - example:
+                    amount: 10000
+                    destination: '062503485239831'
+            example:
+              amount: 10000
+              destination: '062503485239831'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BadRequest-ExceedingAmountCopy1'
+                  - example:
+                      message: Request Failed
+                      timestamp: 2023-06-25T03:02:56.156
+                      data: null
+                      error:
+                        name: Exceeding Amount
+                        detail: You have Passed Daily Maximum TRANSFER Transaction
+              example:
+                message: Request Failed
+                timestamp: 2023-06-25T03:02:56.156
+                data: null
+                error:
+                  name: Exceeding Amount
+                  detail: You have Passed Daily Maximum TRANSFER Transaction
+        default:
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    registerCustomerRequest:
+      title: registerCustomerRequest
+      required:
+        - identityNumber
+        - firstName
+        - lastName
+        - phoneNumber
+        - email
+        - dob
+        - address
+        - occupation
+        - income
+        - maritalStatus
+        - highestEducation
+        - password
+      type: object
+      properties:
+        identityNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        dob:
+          type: string
+        address:
+          type: string
+        occupation:
+          type: string
+        income:
+          type: number
+        maritalStatus:
+          type: string
+        highestEducation:
+          type: string
+        password:
+          type: string
+      example:
+        identityNumber: '1234567890123459'
+        firstName: John
+        lastName: Doe
+        phoneNumber: '123456780'
+        email: waduh2@gmail.com
+        dob: 2004-07-20
+        address: 123 Main Street
+        occupation: Engineer
+        income: 50000
+        maritalStatus: SINGLE
+        highestEducation: BACHELORS_DEGREE
+        password: Password123
+    Error:
+      title: Error
+      required:
+        - name
+        - detail
+      type: object
+      properties:
+        name:
+          type: string
+        detail:
+          type: array
+          items:
+            type: string
+          description: ''
+      example:
+        name: Constraints Violations
+        detail:
+          - occupation must not be null
+          - address must not be null
+          - maritalStatus must not be null
+          - password must not be null
+          - email must not be null
+          - highestEducation must not be null
+          - phoneNumber must not be null
+          - identityNumber must not be null
+          - firstName must not be null
+          - dob must not be null
+          - income must not be null
+    BadRequest-constraintviolation1:
+      title: BadRequest-constraintviolation1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T02:47:48.8083657
+        data: null
+        error:
+          name: Constraints Violations
+          detail:
+            - occupation must not be null
+            - address must not be null
+            - maritalStatus must not be null
+            - password must not be null
+            - email must not be null
+            - highestEducation must not be null
+            - phoneNumber must not be null
+            - identityNumber must not be null
+            - firstName must not be null
+            - dob must not be null
+            - income must not be null
+    UnAuthorized1:
+      title: UnAuthorized1
+      required:
+        - timestamp
+        - status
+        - error
+        - path
+      type: object
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        path:
+          type: string
+      example:
+        timestamp: 2023-06-24T19:51:41.424+00:00
+        status: 401
+        error: Unauthorized
+        path: /api/admin/registercustomer
+    Error2:
+      title: Error2
+      required:
+        - name
+        - detail
+      type: object
+      properties:
+        name:
+          type: string
+        detail:
+          type: string
+      example:
+        name: Cannot Create User
+        detail: Email / Identity Number Has Already Been Used
+    BadRequest-emailidentitynumberhasalreadybeenused1:
+      title: BadRequest-emailidentitynumberhasalreadybeenused1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T02:50:22.302
+        data: null
+        error:
+          name: Cannot Create User
+          detail: Email / Identity Number Has Already Been Used
+    registerAccountRequest:
+      title: registerAccountRequest
+      required:
+        - accountPassword
+        - status
+        - accountType
+        - balance
+        - customerId
+        - depositMonth
+      type: object
+      properties:
+        accountPassword:
+          type: string
+        status:
+          type: string
+        accountType:
+          type: string
+        balance:
+          type: integer
+          format: int32
+        customerId:
+          type: string
+        depositMonth:
+          type: integer
+          format: int32
+      example:
+        accountPassword: '123456'
+        status: ACTIVE
+        accountType: CHECKING
+        balance: 1000000
+        customerId: 620771e1-cdee-4180-839e-30c1c7bf20ec
+        depositMonth: 6
+    BadRequest-CustomerNotFound1:
+      title: BadRequest-CustomerNotFound1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:00:09.644
+        data: null
+        error:
+          name: Customer Not Found
+          detail: Customer you are refering to could not be found
+    BadRequest-AccountNotFound1:
+      title: BadRequest-AccountNotFound1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T02:57:39.046
+        data: null
+        error:
+          name: Account Not Found
+          detail: Account you are refering to could not be found
+    DepositRequest:
+      title: DepositRequest
+      required:
+        - accountNumber
+        - money
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        money:
+          type: integer
+          format: int32
+      example:
+        accountNumber: '062503485239831'
+        money: 14000000
+    Deposit-ExceedingAmount1:
+      title: Deposit-ExceedingAmount1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:02:56.156
+        data: null
+        error:
+          name: Exceeding Amount
+          detail: You have Passed Daily Maximum DEPOSIT Transaction
+    withdrawrequest:
+      title: withdrawrequest
+      required:
+        - accountNumber
+        - money
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        money:
+          type: integer
+          format: int32
+      example:
+        accountNumber: '062503485239831'
+        money: 10000000
+    BadRequest-ExceedingAmount1:
+      title: BadRequest-ExceedingAmount1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:02:56.156
+        data: null
+        error:
+          name: Exceeding Amount
+          detail: You have Passed Daily Maximum WITHDRAW Transaction
+    BadRequest-InsufficientBalance1:
+      title: BadRequest-InsufficientBalance1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:10:15.227
+        data: null
+        error:
+          name: Balance Error
+          detail: Insufficient Balance To Complete This Transaction
+    TransferRequest:
+      title: TransferRequest
+      required:
+        - from
+        - destination
+        - amount
+      type: object
+      properties:
+        from:
+          type: string
+        destination:
+          type: string
+        amount:
+          type: integer
+          format: int32
+      example:
+        from: '062503485395532'
+        destination: '062503485239831'
+        amount: 50000
+    BadRequest-AccountFromFound1:
+      title: BadRequest-AccountFromFound1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:06:42.838
+        data: null
+        error:
+          name: Account Not Found
+          detail: Account you are refering to could not be found
+    UnAtuhorized1:
+      title: UnAtuhorized1
+      required:
+        - timestamp
+        - status
+        - error
+        - path
+      type: object
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        path:
+          type: string
+      example:
+        timestamp: 2023-06-24T19:51:41.424+00:00
+        status: 401
+        error: Unauthorized
+        path: /api/admin/registercustomer
+    CustomerLoginRequest:
+      title: CustomerLoginRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: waduh2@gmail.com
+        password: Password123
+    BadRequest-WrongPassword1:
+      title: BadRequest-WrongPassword1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:17:23.152
+        data: null
+        error:
+          name: Authentication Failed
+          detail: Wrong Password
+    Unauthorized13:
+      title: Unauthorized13
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:19:54.58
+        data: null
+        error:
+          name: Session Expired
+          detail: Please Login Again
+    AccountLoginRequest:
+      title: AccountLoginRequest
+      required:
+        - acid
+        - pin
+      type: object
+      properties:
+        acid:
+          type: string
+        pin:
+          type: string
+      example:
+        acid: 678679e5-fa35-48a5-a2af-a73e30de3cae
+        pin: '123456'
+    DepositRequest1:
+      title: DepositRequest1
+      required:
+        - money
+      type: object
+      properties:
+        money:
+          type: integer
+          format: int32
+      example:
+        money: 50000
+    TransferRequest1:
+      title: TransferRequest1
+      required:
+        - amount
+        - destination
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int32
+        destination:
+          type: string
+      example:
+        amount: 50000
+        destination: '062503485239831'
+    UnAtuhorized3:
+      title: UnAtuhorized3
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:19:54.58
+        data: null
+        error:
+          name: Session Expired
+          detail: Please Login Again
+    BadRequest-Destinationnotfound1:
+      title: BadRequest-Destinationnotfound1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:06:42.838
+        data: null
+        error:
+          name: Account Not Found
+          detail: Account you are refering to could not be found
+    WithdrawRequest1:
+      title: WithdrawRequest1
+      required:
+        - money
+      type: object
+      properties:
+        money:
+          type: integer
+          format: int32
+      example:
+        money: 50000
+    TransferAJWTRequest:
+      title: TransferAJWTRequest
+      required:
+        - amount
+        - destination
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int32
+        destination:
+          type: string
+      example:
+        amount: 10000
+        destination: '062503485239831'
+    BadRequest-ExceedingAmountCopy1:
+      title: BadRequest-ExceedingAmountCopy1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:02:56.156
+        data: null
+        error:
+          name: Exceeding Amount
+          detail: You have Passed Daily Maximum TRANSFER Transaction
+    BadRequest-InsufficientBalanceCopy1:
+      title: BadRequest-InsufficientBalanceCopy1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:10:15.227
+        data: null
+        error:
+          name: Balance Error
+          detail: Insufficient Balance To Complete This Transaction
+    BadRequest-DestinationnotfoundCopy1:
+      title: BadRequest-DestinationnotfoundCopy1
+      required:
+        - message
+        - timestamp
+        - data
+        - error
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+        data:
+          type: string
+          nullable: true
+        error:
+          $ref: '#/components/schemas/Error2'
+      example:
+        message: Request Failed
+        timestamp: 2023-06-25T03:06:42.838
+        data: null
+        error:
+          name: Account Not Found
+          detail: Account you are refering to could not be found
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: admin
+  - name: auth
+  - name: atm
+  - name: App

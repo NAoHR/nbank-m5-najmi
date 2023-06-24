@@ -1,6 +1,5 @@
 package id.co.indivara.jdt12.najmi.nbank.exception;
 
-import id.co.indivara.jdt12.najmi.nbank.enums.StatusEnum;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

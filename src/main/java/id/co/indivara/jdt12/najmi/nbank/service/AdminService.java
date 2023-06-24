@@ -1,7 +1,6 @@
 package id.co.indivara.jdt12.najmi.nbank.service;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxDeposit;
-import id.co.indivara.jdt12.najmi.nbank.entity.TrxTransfer;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxWithdraw;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.DepositRequest;
@@ -13,9 +12,7 @@ import id.co.indivara.jdt12.najmi.nbank.model.response.admin.DisplayCustomerAndA
 import id.co.indivara.jdt12.najmi.nbank.model.response.admin.RegisterAccountResponse;
 import id.co.indivara.jdt12.najmi.nbank.model.response.admin.RegisterCustomerResponse;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.UUID;
 
 public interface AdminService {
 
