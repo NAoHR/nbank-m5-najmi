@@ -66,19 +66,6 @@ public class AccountHelper {
         }
     }
 
-
-    public final List<TrxTransferReferencedId> transferActivity(List<TrxTransfer> transfers){
-        return transfers
-                .stream()
-                .map(e -> TrxTransferReferencedId.builder()
-                        .account(e.getAccount().getAccountNumber())
-                        .destination(e.getDestination().getAccountNumber())
-                        .amount(e.getAmount())
-                        .timestamp(e.getTimestamp())
-                        .build())
-                .collect(Collectors.toList());
-    }
-
     public final void exceedingAmountOfTransaction(Account ac, TransactionTypeEnum t, BigDecimal currentTransaction){
         BigDecimal todayTransaction = getTodayTransaction(t, ac);
         if(todayTransaction == null)todayTransaction = BigDecimal.ZERO;
@@ -124,5 +111,18 @@ public class AccountHelper {
             default:
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal : Internal Server Error");
         }
+    }
+
+    public final List<TrxTransferReferencedId> transferActivity(List<TrxTransfer> transfers){
+        return transfers
+                .stream()
+                .map(e -> TrxTransferReferencedId.builder()
+                        .transferId(e.getTransferId())
+                        .account(e.getAccount().getAccountNumber())
+                        .destination(e.getDestination().getAccountNumber())
+                        .amount(e.getAmount())
+                        .timestamp(e.getTimestamp())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
