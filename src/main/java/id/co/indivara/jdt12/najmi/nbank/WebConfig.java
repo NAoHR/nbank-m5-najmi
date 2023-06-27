@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/app/transfer")
                 .excludePathPatterns("/api/app/customer/account/detail")
                 .excludePathPatterns("/api/app/cardless/**")
+                .excludePathPatterns("/api/atm/redeem/**")
         ;
 
         registry.addInterceptor(accountSecurityInterceptor)
@@ -31,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/app/transfer")
                 .addPathPatterns("/api/app/customer/account/detail")
                 .addPathPatterns("/api/app/cardless/**")
+                .excludePathPatterns("/api/atm/redeem/**")
         ;
     }
 }
