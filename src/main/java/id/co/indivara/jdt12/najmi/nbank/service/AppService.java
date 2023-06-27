@@ -18,5 +18,5 @@ public interface AppService {
 
     TrxTransferReferencedId transferWithApp(Account c, AtmAndAppTransferRequest t); // account token
 
-    TrxCardless cardlessWithdraw(Account account, OnlyMoneyDepositWithdrawRequest money);
+    TrxCardless cardlessWithdraw(Account account, OnlyMoneyDepositWithdrawRequest request);
 }

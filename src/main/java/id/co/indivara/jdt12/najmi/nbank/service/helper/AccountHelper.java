@@ -51,7 +51,7 @@ public class AccountHelper {
         }
     }
 
-    public final void checkMoneyWithBankOrAdmin(BigDecimal money){
+    public final void multipleOf50kValidator(BigDecimal money){
         if(money.remainder(BigDecimal.valueOf(50_000)).compareTo(BigDecimal.ZERO) != 0){
             throw new MultipleOf50kException();
         }

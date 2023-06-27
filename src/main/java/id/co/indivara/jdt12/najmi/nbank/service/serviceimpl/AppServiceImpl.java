@@ -6,6 +6,7 @@ import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxCardless;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
+import id.co.indivara.jdt12.najmi.nbank.model.request.OnlyMoneyDepositWithdrawRequest;
 import id.co.indivara.jdt12.najmi.nbank.repo.AccountRepo;
 
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
@@ -55,9 +56,10 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public TrxCardless cardlessWithdraw(Account account) {
+    public TrxCardless cardlessWithdraw(Account account, OnlyMoneyDepositWithdrawRequest request) {
         accountHelper.checkAccountStatus(account);
         accountHelper.checkAccountType(account);
+        accountHelper.multipleOf50kValidator(request.getMoney());
 
         return TrxCardless.builder().build();
     }
