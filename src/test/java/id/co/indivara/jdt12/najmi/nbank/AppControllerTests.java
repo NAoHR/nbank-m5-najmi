@@ -17,7 +17,6 @@ import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.repo.*;
 import id.co.indivara.jdt12.najmi.nbank.service.AdminService;
 import id.co.indivara.jdt12.najmi.nbank.service.AuthService;
-import jdk.nashorn.internal.parser.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import javax.lang.model.type.NullType;
-import javax.validation.constraints.Null;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
