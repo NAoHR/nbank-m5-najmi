@@ -3,7 +3,6 @@ package id.co.indivara.jdt12.najmi.nbank.service.serviceimpl;
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
 
-import id.co.indivara.jdt12.najmi.nbank.entity.TrxCardless;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.OnlyMoneyDepositWithdrawRequest;
