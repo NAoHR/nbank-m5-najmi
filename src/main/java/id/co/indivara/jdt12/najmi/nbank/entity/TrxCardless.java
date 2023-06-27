@@ -1,5 +1,6 @@
 package id.co.indivara.jdt12.najmi.nbank.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import id.co.indivara.jdt12.najmi.nbank.enums.CardLessEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,8 @@ public class TrxCardless {
     private UUID cardlessId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "account_number", nullable = false)
+    @JsonIgnore
     private Account account;
 
     @Column(nullable = false)
