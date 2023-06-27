@@ -1,7 +1,7 @@
 package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
-import id.co.indivara.jdt12.najmi.nbank.model.request.AtmDepositWithdrawRequest;
+import id.co.indivara.jdt12.najmi.nbank.model.request.OnlyMoneyDepositWithdrawRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.service.AtmService;
@@ -35,7 +35,7 @@ public class AtmController {
     @PostMapping("/transaction/deposit")
     public final ResponseEntity<Object> depoAtm(
             @RequestAttribute("account") Account account,
-            @RequestBody AtmDepositWithdrawRequest depositRequest
+            @RequestBody OnlyMoneyDepositWithdrawRequest depositRequest
             ){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -50,7 +50,7 @@ public class AtmController {
     @PostMapping("/transaction/withdraw")
     public final ResponseEntity<Object> witdrawAtm(
             @RequestAttribute("account") Account account,
-            @RequestBody AtmDepositWithdrawRequest withdrawRequest
+            @RequestBody OnlyMoneyDepositWithdrawRequest withdrawRequest
     ){
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 WebResponse.builder()

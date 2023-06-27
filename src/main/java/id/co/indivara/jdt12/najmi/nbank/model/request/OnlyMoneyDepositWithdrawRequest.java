@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AtmDepositWithdrawRequest {
+public class OnlyMoneyDepositWithdrawRequest {
     @NotNull
     @Min(0)
     private BigDecimal money;

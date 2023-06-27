@@ -3,12 +3,14 @@ package id.co.indivara.jdt12.najmi.nbank.service.serviceimpl;
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
 
+import id.co.indivara.jdt12.najmi.nbank.entity.TrxCardless;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.repo.AccountRepo;
 
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.AppService;
+import id.co.indivara.jdt12.najmi.nbank.service.helper.AccountHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ import java.util.List;
 
 @Service
 public class AppServiceImpl implements AppService {
+
+    @Autowired
+    private AccountHelper accountHelper;
 
     @Autowired
     private AccountService accountService;
@@ -47,5 +52,13 @@ public class AppServiceImpl implements AppService {
     public final TrxTransferReferencedId transferWithApp(Account c, AtmAndAppTransferRequest t) {
         validatorService.validate(t);
         return accountService.transfer(c, t.getDestination(), t.getAmount(), false);
+    }
+
+    @Override
+    public TrxCardless cardlessWithdraw(Account account) {
+        accountHelper.checkAccountStatus(account);
+        accountHelper.checkAccountType(account);
+
+        return TrxCardless.builder().build();
     }
 }

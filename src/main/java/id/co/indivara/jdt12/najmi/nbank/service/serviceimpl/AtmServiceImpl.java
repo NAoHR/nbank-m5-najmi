@@ -5,7 +5,7 @@ import id.co.indivara.jdt12.najmi.nbank.entity.TrxDeposit;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxWithdraw;
 import id.co.indivara.jdt12.najmi.nbank.exception.MinimumIs5KException;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
-import id.co.indivara.jdt12.najmi.nbank.model.request.AtmDepositWithdrawRequest;
+import id.co.indivara.jdt12.najmi.nbank.model.request.OnlyMoneyDepositWithdrawRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.AtmService;
@@ -31,13 +31,13 @@ public class AtmServiceImpl implements AtmService {
     }
 
     @Override
-    public TrxDeposit depositViaAtm(Account account, AtmDepositWithdrawRequest depositRequest) {
+    public TrxDeposit depositViaAtm(Account account, OnlyMoneyDepositWithdrawRequest depositRequest) {
         validatorService.validate(depositRequest);
         return accountService.deposit(account, depositRequest.getMoney(), true);
     }
 
     @Override
-    public TrxWithdraw withdrawViaAtm(Account account, AtmDepositWithdrawRequest withdrawRequest) {
+    public TrxWithdraw withdrawViaAtm(Account account, OnlyMoneyDepositWithdrawRequest withdrawRequest) {
         validatorService.validate(withdrawRequest);
         return accountService.withdraw(account, withdrawRequest.getMoney(), true);
     }

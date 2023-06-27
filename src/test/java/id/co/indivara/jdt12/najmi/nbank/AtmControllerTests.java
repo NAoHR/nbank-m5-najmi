@@ -9,14 +9,13 @@ import id.co.indivara.jdt12.najmi.nbank.entity.TrxDeposit;
 import id.co.indivara.jdt12.najmi.nbank.enums.AccountTypeEnum;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
-import id.co.indivara.jdt12.najmi.nbank.model.request.AtmDepositWithdrawRequest;
+import id.co.indivara.jdt12.najmi.nbank.model.request.OnlyMoneyDepositWithdrawRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.account.AuthAccountRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.TokenResponse;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.repo.*;
 import id.co.indivara.jdt12.najmi.nbank.service.AdminService;
 import id.co.indivara.jdt12.najmi.nbank.service.AuthService;
-import io.jsonwebtoken.Jwt;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import javax.lang.model.type.NullType;
-import javax.validation.constraints.Null;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -164,7 +162,7 @@ public class AtmControllerTests {
                 .build();
         TokenResponse t = authService.accountLogin(req);
 
-        AtmDepositWithdrawRequest request = AtmDepositWithdrawRequest.builder()
+        OnlyMoneyDepositWithdrawRequest request = OnlyMoneyDepositWithdrawRequest.builder()
                 .money(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -194,7 +192,7 @@ public class AtmControllerTests {
         AccountAuth accountAuth = accountAuthRepo.findByAccount(account);
         accountAuth.setToken(t);
         accountAuthRepo.save(accountAuth);
-        AtmDepositWithdrawRequest request = AtmDepositWithdrawRequest.builder()
+        OnlyMoneyDepositWithdrawRequest request = OnlyMoneyDepositWithdrawRequest.builder()
                 .money(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -219,7 +217,7 @@ public class AtmControllerTests {
                 .build();
         TokenResponse t = authService.accountLogin(req);
 
-        AtmDepositWithdrawRequest request = AtmDepositWithdrawRequest.builder()
+        OnlyMoneyDepositWithdrawRequest request = OnlyMoneyDepositWithdrawRequest.builder()
                 .money(BigDecimal.valueOf(50_000))
                 .build();
 
@@ -249,7 +247,7 @@ public class AtmControllerTests {
         AccountAuth accountAuth = accountAuthRepo.findByAccount(account);
         accountAuth.setToken(t);
         accountAuthRepo.save(accountAuth);
-        AtmDepositWithdrawRequest request = AtmDepositWithdrawRequest.builder()
+        OnlyMoneyDepositWithdrawRequest request = OnlyMoneyDepositWithdrawRequest.builder()
                 .money(BigDecimal.valueOf(50_000))
                 .build();
 
