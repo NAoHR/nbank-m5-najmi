@@ -54,13 +54,4 @@ public class AppServiceImpl implements AppService {
         validatorService.validate(t);
         return accountService.transfer(c, t.getDestination(), t.getAmount(), false);
     }
-
-    @Override
-    public TrxCardless cardlessWithdraw(Account account, OnlyMoneyDepositWithdrawRequest request) {
-        accountHelper.checkAccountStatus(account);
-        accountHelper.checkAccountType(account);
-        accountHelper.multipleOf50kValidator(request.getMoney());
-
-        return TrxCardless.builder().build();
-    }
 }
