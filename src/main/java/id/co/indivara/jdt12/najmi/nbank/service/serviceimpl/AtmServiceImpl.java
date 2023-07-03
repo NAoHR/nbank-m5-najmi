@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Service
@@ -69,8 +72,12 @@ public class AtmServiceImpl implements AtmService {
 
         TrxCardless trxCardless = trxCardlessRepo.findById(request.getUuid()).orElseThrow(RedeemTicketNotFound::new);
         if(trxCardless.getType().equals(CardLessEnum.WITHDRAW)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ticket Not Valid : This Is A Withdraw ticket, Please Redeem It On Withdraw Feature");
+        if(trxCardless.getRedeemed().equals(Boolean.TRUE)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Ticket Redeemed : Ticket Is Already Redeemed at %s", trxCardless.getRedeemedTime().toString()));
         if(request.getMoney() == null || request.getMoney().compareTo(trxCardless.getAmount()) != 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Money Violation : Please Fulfil The Specified Amount Of money Requirements");
 
+        trxCardless.setRedeemed(true);
+        trxCardless.setRedeemedTime(Timestamp.valueOf(LocalDateTime.now()));
+        trxCardlessRepo.save(trxCardless);
 
         return accountService.deposit(trxCardless.getAccount().getAccountId(), request.getMoney(), true);
     }
@@ -81,6 +88,11 @@ public class AtmServiceImpl implements AtmService {
 
         TrxCardless trxCardless = trxCardlessRepo.findById(request.getUuid()).orElseThrow(RedeemTicketNotFound::new);
         if(trxCardless.getType().equals(CardLessEnum.DEPOSIT)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ticket Not Valid : This Is A Deposit ticket, Please Redeem It On Deposit Feature");
+        if(trxCardless.getRedeemed().equals(Boolean.TRUE)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Ticket Redeemed : Ticket Is Already Redeemed at %s", trxCardless.getRedeemedTime()));
+
+        trxCardless.setRedeemed(true);
+        trxCardless.setRedeemedTime(Timestamp.valueOf(LocalDateTime.now()));
+        trxCardlessRepo.save(trxCardless);
 
         return accountService.withdraw(trxCardless.getAccount().getAccountId(), trxCardless.getAmount(), true);
     }

@@ -101,4 +101,19 @@ public class AppController {
         );
     }
 
+    @GetMapping("/cardless/check/{type}")
+    public ResponseEntity<Object> checkDepositWithdrawCardless(
+            @RequestAttribute("account") Account account,
+            @PathVariable("type") String type,
+            @RequestParam(value = "redeemed", required = false, defaultValue = "true") String redeemed
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                WebResponse.builder()
+                        .message("Checking Success")
+                        .data(appService.checkOwnedCardlessTransaction(account, type, redeemed))
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
 }

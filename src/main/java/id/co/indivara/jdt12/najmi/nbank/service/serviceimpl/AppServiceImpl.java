@@ -16,14 +16,15 @@ import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.AppService;
 import id.co.indivara.jdt12.najmi.nbank.service.helper.AccountHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AppServiceImpl implements AppService {
@@ -82,7 +83,7 @@ public class AppServiceImpl implements AppService {
                 .account(account)
                 .amount(request.getMoney())
                 .type(CardLessEnum.WITHDRAW)
-                .reedemed(false)
+                .redeemed(false)
                 .createdTime(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
 
@@ -105,12 +106,43 @@ public class AppServiceImpl implements AppService {
                 .account(account)
                 .amount(request.getMoney())
                 .type(CardLessEnum.DEPOSIT)
-                .reedemed(false)
+                .redeemed(false)
                 .createdTime(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
 
         trxCardlessRepo.save(trxCardless);
 
         return trxCardless;
+    }
+
+    @Override
+    public List<TrxCardless> checkOwnedCardlessTransaction(Account account, String type, String redeemed) {
+        ArrayList<TrxCardless> buckets;
+        switch (type.toLowerCase()){
+            case "withdraw":
+                buckets = getTrxCardlessBasedOnOption(account, redeemed, CardLessEnum.WITHDRAW);
+                break;
+            case "deposit":
+                buckets = getTrxCardlessBasedOnOption(account, redeemed, CardLessEnum.DEPOSIT);
+                break;
+            default:
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Type Invalid : Please Select Between withdraw and deppsit");
+        }
+        return buckets;
+    }
+
+
+    private ArrayList<TrxCardless> getTrxCardlessBasedOnOption(Account account, String redeemed, CardLessEnum type){
+        ArrayList<TrxCardless> t;
+
+        if(redeemed.equalsIgnoreCase("true") || redeemed.equalsIgnoreCase("false")){
+            t = new ArrayList<>(trxCardlessRepo.getTrxByOption(account, Boolean.valueOf(redeemed), type));
+        } else if (redeemed.equalsIgnoreCase("all")) {
+            t = new ArrayList<>(trxCardlessRepo.getTrxByOption(account, type));
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request : Only accept `true`, `false`, and `all` as a status");
+        }
+
+        return t;
     }
 }

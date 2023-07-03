@@ -20,4 +20,6 @@ public interface AppService {
 
     TrxCardless cardlessWithdraw(Account account, OnlyMoneyDepositWithdrawRequest request);
     TrxCardless cardlessDeposit(Account account, OnlyMoneyDepositWithdrawRequest request);
+
+    List<TrxCardless> checkOwnedCardlessTransaction(Account account, String type, String redeemed);
 }

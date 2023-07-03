@@ -35,7 +35,7 @@ public class TrxCardless {
     @Column(nullable = false)
     private CardLessEnum type;
     @Column(nullable = false)
-    private boolean reedemed;
+    private Boolean redeemed;
 
     @Column(name = "created_time", nullable = false)
     private Timestamp createdTime;
