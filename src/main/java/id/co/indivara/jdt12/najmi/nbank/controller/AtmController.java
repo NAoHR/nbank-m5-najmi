@@ -91,7 +91,7 @@ public class AtmController {
         );
     }
 
-    @PostMapping("/redeem/witdhraw")
+    @PostMapping("/redeem/withdraw")
     public final ResponseEntity<Object> redeemWithdraw(
             @RequestBody RedeemWithdrawOrDepositRequest request
     ){
