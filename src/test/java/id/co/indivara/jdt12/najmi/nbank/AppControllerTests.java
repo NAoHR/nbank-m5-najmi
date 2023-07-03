@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import id.co.indivara.jdt12.najmi.nbank.entity.*;
 import id.co.indivara.jdt12.najmi.nbank.enums.AccountTypeEnum;
+import id.co.indivara.jdt12.najmi.nbank.enums.CardLessEnum;
 import id.co.indivara.jdt12.najmi.nbank.model.RedeemWithdrawOrDepositRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
@@ -31,6 +32,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import javax.lang.model.type.NullType;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -367,6 +370,43 @@ public class AppControllerTests {
                 status().isCreated()
         ).andDo(result -> {
             WebResponse<TrxCardless, NullType> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<TrxCardless, NullType>>() {});
+            log.info(response.toString());
+            Assertions.assertNull(response.getError());
+            Assertions.assertNotNull(response.getData());
+        });
+    }
+
+    @Test
+    public void checkCardlessTransaction() throws Exception {
+        Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
+
+        AuthAccountRequest req = AuthAccountRequest.builder()
+                .acid(account.getAccountId())
+                .pin("123456")
+                .build();
+        TokenResponse token = authService.accountLogin(req);
+
+        TrxCardless transaction = trxCardlessRepo.save(
+                TrxCardless.builder()
+                        .cardlessId(UUID.randomUUID())
+                        .account(account)
+                        .amount(BigDecimal.valueOf(500_000))
+                        .type(CardLessEnum.WITHDRAW)
+                        .redeemed(true)
+                        .createdTime(Timestamp.valueOf(LocalDateTime.now()))
+                        .redeemedTime(Timestamp.valueOf(LocalDateTime.now()))
+                        .build()
+        );
+
+        mockMvc.perform(
+                get("/api/app/cardless/check/withdraw")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token.getToken())
+        ).andExpectAll(
+                status().isOk()
+        ).andDo(result -> {
+            WebResponse<List<TrxCardless>, NullType> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<List<TrxCardless>, NullType>>() {});
             log.info(response.toString());
             Assertions.assertNull(response.getError());
             Assertions.assertNotNull(response.getData());
