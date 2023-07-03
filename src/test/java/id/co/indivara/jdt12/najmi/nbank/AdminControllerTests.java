@@ -80,12 +80,16 @@ public class AdminControllerTests {
     private TrxDepositRepo trxDepositRepo;
 
     @Autowired
+    private TrxCardlessRepo trxCardlessRepo;
+
+    @Autowired
     private TestHelper testHelper;
 
 
     @Before // jalanin setiap sebelum test
     public void setup(){
         objectMapper.registerModule(new JavaTimeModule());
+        trxCardlessRepo.deleteAll();
         customerAuthRepo.deleteAll();
         accountAuthRepo.deleteAll();
         trxDepositRepo.deleteAll();

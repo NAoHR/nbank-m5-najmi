@@ -1,6 +1,7 @@
 package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
+import id.co.indivara.jdt12.najmi.nbank.model.RedeemWithdrawOrDepositRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.OnlyMoneyDepositWithdrawRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
@@ -73,6 +74,32 @@ public class AtmController {
                         .message("Deposit Success")
                         .timestamp(LocalDateTime.now())
                         .data(atmService.transferViaAtm(account, atmTransferRequest))
+                        .build()
+        );
+    }
+
+    @PostMapping("/redeem/deposit")
+    public final ResponseEntity<Object> redeemDeposit(
+            @RequestBody RedeemWithdrawOrDepositRequest request
+            ){
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                WebResponse.builder()
+                        .message("Deposit Redeem Success")
+                        .timestamp(LocalDateTime.now())
+                        .data(atmService.redeemDeposit(request))
+                        .build()
+        );
+    }
+
+    @PostMapping("/redeem/withdraw")
+    public final ResponseEntity<Object> redeemWithdraw(
+            @RequestBody RedeemWithdrawOrDepositRequest request
+    ){
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                WebResponse.builder()
+                        .message("Withdraw Redeem Success")
+                        .timestamp(LocalDateTime.now())
+                        .data(atmService.redeemWithdraw(request))
                         .build()
         );
     }
