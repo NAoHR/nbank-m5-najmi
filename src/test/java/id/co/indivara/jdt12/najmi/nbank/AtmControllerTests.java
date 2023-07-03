@@ -381,11 +381,6 @@ public class AtmControllerTests {
     @Test
     public void depositRedeemedSuccess() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -407,7 +402,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/deposit")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isCreated()
@@ -424,11 +418,6 @@ public class AtmControllerTests {
     @Test
     public void depositRedeemedFailedTicketIdNotFound() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         RedeemWithdrawOrDepositRequest request = RedeemWithdrawOrDepositRequest.builder()
                 .uuid(UUID.randomUUID())
@@ -439,7 +428,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/deposit")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -456,11 +444,6 @@ public class AtmControllerTests {
     @Test
     public void depositRedeemedFailedTicketIdIsAWithdrawTicket() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -482,7 +465,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/deposit")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -499,11 +481,6 @@ public class AtmControllerTests {
     @Test
     public void depositRedeemedFailedTicketAlreadyRedeemed() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -526,7 +503,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/deposit")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -543,11 +519,6 @@ public class AtmControllerTests {
     @Test
     public void depositRedeemedFailedMoneyNotFulfilTheRequirement() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -569,7 +540,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/deposit")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -586,11 +556,6 @@ public class AtmControllerTests {
     @Test
     public void depositRedeemedFailedMaximumDepositIsExceeded() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -620,7 +585,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/deposit")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -637,11 +601,6 @@ public class AtmControllerTests {
     @Test
     public void withdrawRedeemedSuccess() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0, BigDecimal.valueOf(50_000_000));
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -663,7 +622,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/withdraw")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isCreated()
@@ -680,11 +638,6 @@ public class AtmControllerTests {
     @Test
     public void withdrawRedeemedFailedTicketIdNotFound() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0, BigDecimal.valueOf(50_000_000));
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         RedeemWithdrawOrDepositRequest request = RedeemWithdrawOrDepositRequest.builder()
                 .uuid(UUID.randomUUID())
@@ -695,7 +648,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/withdraw")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -712,11 +664,6 @@ public class AtmControllerTests {
     @Test
     public void withdrawRedeemedFailedTicketIdIsAdepositTicket() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -738,7 +685,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/withdraw")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -755,11 +701,6 @@ public class AtmControllerTests {
     @Test
     public void withdrawRedeemedFailedTicketAlreadyRedeemed() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -782,7 +723,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/withdraw")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -799,11 +739,6 @@ public class AtmControllerTests {
     @Test
     public void withdrawRedeemedFailedMaximumWithdrawIsExceeded() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0, BigDecimal.valueOf(21_000_000));
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -833,7 +768,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/withdraw")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
@@ -850,11 +784,6 @@ public class AtmControllerTests {
     @Test
     public void withdrawRedeemedFailedMaximumInsufficient() throws Exception{
         Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
-        AuthAccountRequest req = AuthAccountRequest.builder()
-                .acid(account.getAccountId())
-                .pin("123456")
-                .build();
-        TokenResponse token = authService.accountLogin(req);
 
         TrxCardless transaction = trxCardlessRepo.save(
                 TrxCardless.builder()
@@ -876,7 +805,6 @@ public class AtmControllerTests {
                 post("/api/atm/redeem/withdraw")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
                         .content(objectMapper.writeValueAsString(request))
         ).andExpectAll(
                 status().isBadRequest()
