@@ -75,6 +75,9 @@ public class AppControllerTests {
     private TrxDepositRepo trxDepositRepo;
 
     @Autowired
+    private TrxCardlessRepo trxCardlessRepo;
+
+    @Autowired
     private AuthService authService;
 
     /*
@@ -95,6 +98,7 @@ public class AppControllerTests {
         objectMapper.registerModule(new JavaTimeModule());
         customerAuthRepo.deleteAll();
         accountAuthRepo.deleteAll();
+        trxCardlessRepo.deleteAll();
         trxDepositRepo.deleteAll();
         trxWithdrawRepo.deleteAll();
         trxTransferRepo.deleteAll();
