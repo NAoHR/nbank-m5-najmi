@@ -107,7 +107,7 @@ public class AppController {
             @PathVariable("type") String type,
             @RequestParam(value = "redeemed", required = false, defaultValue = "true") String redeemed
     ) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 WebResponse.builder()
                         .message("Checking Success")
                         .data(appService.checkOwnedCardlessTransaction(account, type, redeemed))
