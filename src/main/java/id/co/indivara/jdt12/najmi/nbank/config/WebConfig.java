@@ -1,4 +1,4 @@
-package id.co.indivara.jdt12.najmi.nbank;
+package id.co.indivara.jdt12.najmi.nbank.config;
 
 import id.co.indivara.jdt12.najmi.nbank.security.AccountSecurityInterceptor;
 import id.co.indivara.jdt12.najmi.nbank.security.CustomerSecurityInterceptor;
