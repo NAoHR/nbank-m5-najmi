@@ -10,6 +10,7 @@ import id.co.indivara.jdt12.najmi.nbank.model.response.admin.DisplayCustomerAndA
 import id.co.indivara.jdt12.najmi.nbank.repo.*;
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.helper.AccountHelper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,22 +25,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-
-    @Autowired
-    private AccountRepo accountRepo;
-
-    @Autowired
-    private CustomerRepo customerRepo;
-    @Autowired
-    private TrxWithdrawRepo trxWithdrawRepo;
-    @Autowired
-    private TrxDepositRepo trxDepositRepo;
-    @Autowired
-    private TrxTransferRepo trxTransferRepo;
-
-    @Autowired
-    private AccountHelper accountHelper;
+    private final AccountRepo accountRepo;
+    private final CustomerRepo customerRepo;
+    private final TrxWithdrawRepo trxWithdrawRepo;
+    private final TrxDepositRepo trxDepositRepo;
+    private final TrxTransferRepo trxTransferRepo;
+    private final AccountHelper accountHelper;
 
 
     @Override

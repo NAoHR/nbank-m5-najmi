@@ -1,4 +1,4 @@
-package id.co.indivara.jdt12.najmi.nbank;
+package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,6 @@ import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
 import id.co.indivara.jdt12.najmi.nbank.entity.CustomerAuth;
 import id.co.indivara.jdt12.najmi.nbank.enums.AccountTypeEnum;
 import id.co.indivara.jdt12.najmi.nbank.model.request.account.AuthAccountRequest;
-import id.co.indivara.jdt12.najmi.nbank.model.request.admin.RegisterAccountRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.admin.RegisterCustomerReq;
 import id.co.indivara.jdt12.najmi.nbank.model.request.customer.AuthCustomerRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.TokenResponse;
@@ -18,8 +17,6 @@ import id.co.indivara.jdt12.najmi.nbank.model.response.admin.RegisterCustomerRes
 import id.co.indivara.jdt12.najmi.nbank.repo.*;
 import id.co.indivara.jdt12.najmi.nbank.service.AdminService;
 import id.co.indivara.jdt12.najmi.nbank.service.AuthService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,9 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.lang.model.type.NullType;
-import javax.validation.constraints.Null;
 
-import java.util.Date;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
