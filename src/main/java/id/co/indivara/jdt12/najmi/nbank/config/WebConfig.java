@@ -1,4 +1,4 @@
-package id.co.indivara.jdt12.najmi.nbank;
+package id.co.indivara.jdt12.najmi.nbank.config;
 
 import id.co.indivara.jdt12.najmi.nbank.security.AccountSecurityInterceptor;
 import id.co.indivara.jdt12.najmi.nbank.security.CustomerSecurityInterceptor;
@@ -22,6 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/app/**")
                 .excludePathPatterns("/api/app/transfer")
                 .excludePathPatterns("/api/app/customer/account/detail")
+                .excludePathPatterns("/api/app/cardless/**")
+                .excludePathPatterns("/api/atm/redeem/**")
         ;
 
         registry.addInterceptor(accountSecurityInterceptor)
@@ -29,6 +31,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/atm/**")
                 .addPathPatterns("/api/app/transfer")
                 .addPathPatterns("/api/app/customer/account/detail")
+                .addPathPatterns("/api/app/cardless/**")
+                .excludePathPatterns("/api/atm/redeem/**")
         ;
     }
 }

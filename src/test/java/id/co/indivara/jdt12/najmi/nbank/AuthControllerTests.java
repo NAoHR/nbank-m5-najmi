@@ -79,6 +79,9 @@ public class AuthControllerTests {
     private TrxDepositRepo trxDepositRepo;
 
     @Autowired
+    private TrxCardlessRepo trxCardlessRepo;
+
+    @Autowired
     private AuthService authService;
     /*
      * 1. Customer Login Success - done
@@ -106,6 +109,7 @@ public class AuthControllerTests {
     public void setup(){
         objectMapper.registerModule(new JavaTimeModule());
         customerAuthRepo.deleteAll();
+        trxCardlessRepo.deleteAll();
         accountAuthRepo.deleteAll();
         trxDepositRepo.deleteAll();
         trxWithdrawRepo.deleteAll();

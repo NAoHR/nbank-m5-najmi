@@ -3,6 +3,7 @@ package id.co.indivara.jdt12.najmi.nbank.controller;
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
+import id.co.indivara.jdt12.najmi.nbank.model.request.OnlyMoneyDepositWithdrawRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.service.AppService;
 
@@ -76,4 +77,48 @@ public class AppController {
                         .build()
         );
     }
+
+    @PostMapping("/cardless/withdraw")
+    public ResponseEntity<Object> withdrawCardless(
+            @RequestAttribute("account") Account account,
+            @RequestBody OnlyMoneyDepositWithdrawRequest request
+            ){
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                WebResponse.builder()
+                        .message("Cardless Withdraw Success")
+                        .data(appService.cardlessWithdraw(account, request))
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
+    @PostMapping("/cardless/deposit")
+    public ResponseEntity<Object> depositCardless(
+            @RequestAttribute("account") Account account,
+            @RequestBody OnlyMoneyDepositWithdrawRequest request
+    ){
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                WebResponse.builder()
+                        .message("Cardless Deposit Success")
+                        .data(appService.cardlessDeposit(account, request))
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
+    @GetMapping("/cardless/check/{type}")
+    public ResponseEntity<Object> checkDepositWithdrawCardless(
+            @RequestAttribute("account") Account account,
+            @PathVariable("type") String type,
+            @RequestParam(value = "redeemed", required = false, defaultValue = "true") String redeemed
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                WebResponse.builder()
+                        .message("Checking Success")
+                        .data(appService.checkOwnedCardlessTransaction(account, type, redeemed))
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
 }

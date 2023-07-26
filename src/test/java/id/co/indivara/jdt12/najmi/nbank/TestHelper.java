@@ -157,7 +157,13 @@ public class TestHelper {
                 .openDate(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
 
-        accountRepo.save(account);
+        AccountAuth accountAuth = AccountAuth.builder()
+                .token(null)
+                .account(accountRepo.save(account))
+                .build();
+
+        accountAuthRepo.save(accountAuth);
+
         return account;
     }
 

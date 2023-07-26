@@ -14,6 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 		AuthControllerTests.class,
 		AtmControllerTests.class
 })
-class NbankApplicationTests {
+public class NbankApplicationTests {
 
 }

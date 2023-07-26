@@ -3,11 +3,10 @@ package id.co.indivara.jdt12.najmi.nbank;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import id.co.indivara.jdt12.najmi.nbank.entity.Account;
-import id.co.indivara.jdt12.najmi.nbank.entity.AccountAuth;
-import id.co.indivara.jdt12.najmi.nbank.entity.Customer;
-import id.co.indivara.jdt12.najmi.nbank.entity.CustomerAuth;
+import id.co.indivara.jdt12.najmi.nbank.entity.*;
 import id.co.indivara.jdt12.najmi.nbank.enums.AccountTypeEnum;
+import id.co.indivara.jdt12.najmi.nbank.enums.CardLessEnum;
+import id.co.indivara.jdt12.najmi.nbank.model.RedeemWithdrawOrDepositRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.account.AuthAccountRequest;
@@ -17,7 +16,6 @@ import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.repo.*;
 import id.co.indivara.jdt12.najmi.nbank.service.AdminService;
 import id.co.indivara.jdt12.najmi.nbank.service.AuthService;
-import jdk.nashorn.internal.parser.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,11 +30,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import javax.lang.model.type.NullType;
-import javax.validation.constraints.Null;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -77,6 +77,9 @@ public class AppControllerTests {
     private TrxDepositRepo trxDepositRepo;
 
     @Autowired
+    private TrxCardlessRepo trxCardlessRepo;
+
+    @Autowired
     private AuthService authService;
 
     /*
@@ -89,7 +92,9 @@ public class AppControllerTests {
      * 2. show account detail and trasaction - done
      *   2.1 show account detail and trasaction failed token expired - done
      * 3. transfer via app - done
-     * 4. transfer via app failed token expired - done
+     *   3.1 transfer via app failed token expired - done
+     * 4. deposit cardless
+     * 5. withdraw cardless
      */
 
     @Before // jalanin setiap sebelum test
@@ -97,6 +102,7 @@ public class AppControllerTests {
         objectMapper.registerModule(new JavaTimeModule());
         customerAuthRepo.deleteAll();
         accountAuthRepo.deleteAll();
+        trxCardlessRepo.deleteAll();
         trxDepositRepo.deleteAll();
         trxWithdrawRepo.deleteAll();
         trxTransferRepo.deleteAll();
@@ -306,6 +312,105 @@ public class AppControllerTests {
         ).andExpect(
                 status().isUnauthorized()
         ).andDo(this::accountExpired);
+    }
+
+    @Test
+    public void depositCardless() throws Exception {
+        Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
+
+        AuthAccountRequest req = AuthAccountRequest.builder()
+                .acid(account.getAccountId())
+                .pin("123456")
+                .build();
+        TokenResponse token = authService.accountLogin(req);
+
+        RedeemWithdrawOrDepositRequest request = RedeemWithdrawOrDepositRequest.builder()
+                .uuid(UUID.randomUUID())
+                .money(BigDecimal.valueOf(500_000))
+                .build();
+
+        mockMvc.perform(
+                post("/api/app/cardless/deposit")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token.getToken())
+                        .content(objectMapper.writeValueAsString(request))
+        ).andExpectAll(
+                status().isCreated()
+        ).andDo(result -> {
+            WebResponse<TrxCardless, NullType> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<TrxCardless, NullType>>() {});
+            log.info(response.toString());
+            Assertions.assertNull(response.getError());
+            Assertions.assertNotNull(response.getData());
+        });
+    }
+
+    @Test
+    public void withdrawCardless() throws Exception {
+        Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
+
+        AuthAccountRequest req = AuthAccountRequest.builder()
+                .acid(account.getAccountId())
+                .pin("123456")
+                .build();
+        TokenResponse token = authService.accountLogin(req);
+
+        RedeemWithdrawOrDepositRequest request = RedeemWithdrawOrDepositRequest.builder()
+                .uuid(UUID.randomUUID())
+                .money(BigDecimal.valueOf(50_000))
+                .build();
+
+        mockMvc.perform(
+                post("/api/app/cardless/withdraw")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token.getToken())
+                        .content(objectMapper.writeValueAsString(request))
+        ).andExpectAll(
+                status().isCreated()
+        ).andDo(result -> {
+            WebResponse<TrxCardless, NullType> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<TrxCardless, NullType>>() {});
+            log.info(response.toString());
+            Assertions.assertNull(response.getError());
+            Assertions.assertNotNull(response.getData());
+        });
+    }
+
+    @Test
+    public void checkCardlessTransaction() throws Exception {
+        Account account = testHelper.createOkAccount(AccountTypeEnum.SAVINGS, 0);
+
+        AuthAccountRequest req = AuthAccountRequest.builder()
+                .acid(account.getAccountId())
+                .pin("123456")
+                .build();
+        TokenResponse token = authService.accountLogin(req);
+
+        TrxCardless transaction = trxCardlessRepo.save(
+                TrxCardless.builder()
+                        .cardlessId(UUID.randomUUID())
+                        .account(account)
+                        .amount(BigDecimal.valueOf(500_000))
+                        .type(CardLessEnum.WITHDRAW)
+                        .redeemed(true)
+                        .createdTime(Timestamp.valueOf(LocalDateTime.now()))
+                        .redeemedTime(Timestamp.valueOf(LocalDateTime.now()))
+                        .build()
+        );
+
+        mockMvc.perform(
+                get("/api/app/cardless/check/withdraw")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token.getToken())
+        ).andExpectAll(
+                status().isOk()
+        ).andDo(result -> {
+            WebResponse<List<TrxCardless>, NullType> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<WebResponse<List<TrxCardless>, NullType>>() {});
+            log.info(response.toString());
+            Assertions.assertNull(response.getError());
+            Assertions.assertNotNull(response.getData());
+        });
     }
 
 }

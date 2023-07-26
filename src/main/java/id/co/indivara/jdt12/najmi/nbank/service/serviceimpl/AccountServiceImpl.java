@@ -103,7 +103,7 @@ public class AccountServiceImpl implements AccountService {
         accountHelper.checkAccountStatus(account);
         accountHelper.checkAccountType(account);
 
-        if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
+        if(isBankOrAdmin) accountHelper.multipleOf50kValidator(amount);
 
         accountHelper.exceedingAmountOfTransaction(account, TransactionTypeEnum.DEPOSIT, amount);
 
@@ -138,7 +138,7 @@ public class AccountServiceImpl implements AccountService {
         accountHelper.checkAccountStatus(account);
         accountHelper.checkAccountType(account);
 
-        if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(amount);
+        if(isBankOrAdmin) accountHelper.multipleOf50kValidator(amount);
         accountHelper.exceedingAmountOfTransaction(account, TransactionTypeEnum.WITHDRAW, amount);
 
         BigDecimal nowMoney = account.getBalance().subtract(amount);
@@ -178,7 +178,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountHelper.checkAccountType(accountFrom);
         accountHelper.checkAccountType(accountTo);
-        if(isBankOrAdmin) accountHelper.checkMoneyWithBankOrAdmin(money);
+        if(isBankOrAdmin) accountHelper.multipleOf50kValidator(money);
 
         BigDecimal accountFromMoney = accountFrom.getBalance().subtract(money);
 

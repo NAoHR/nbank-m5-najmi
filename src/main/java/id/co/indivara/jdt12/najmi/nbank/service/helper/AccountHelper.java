@@ -51,7 +51,7 @@ public class AccountHelper {
         }
     }
 
-    public final void checkMoneyWithBankOrAdmin(BigDecimal money){
+    public final void multipleOf50kValidator(BigDecimal money){
         if(money.remainder(BigDecimal.valueOf(50_000)).compareTo(BigDecimal.ZERO) != 0){
             throw new MultipleOf50kException();
         }
@@ -64,19 +64,6 @@ public class AccountHelper {
                 account.getAccountType().equals(AccountTypeEnum.SAVINGS) && calculatedMoney.compareTo(BigDecimal.valueOf(50_000)) < 0){
             throw new InsufficientBalanceException();
         }
-    }
-
-
-    public final List<TrxTransferReferencedId> transferActivity(List<TrxTransfer> transfers){
-        return transfers
-                .stream()
-                .map(e -> TrxTransferReferencedId.builder()
-                        .account(e.getAccount().getAccountNumber())
-                        .destination(e.getDestination().getAccountNumber())
-                        .amount(e.getAmount())
-                        .timestamp(e.getTimestamp())
-                        .build())
-                .collect(Collectors.toList());
     }
 
     public final void exceedingAmountOfTransaction(Account ac, TransactionTypeEnum t, BigDecimal currentTransaction){
@@ -124,5 +111,18 @@ public class AccountHelper {
             default:
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal : Internal Server Error");
         }
+    }
+
+    public final List<TrxTransferReferencedId> transferActivity(List<TrxTransfer> transfers){
+        return transfers
+                .stream()
+                .map(e -> TrxTransferReferencedId.builder()
+                        .transferId(e.getTransferId())
+                        .account(e.getAccount().getAccountNumber())
+                        .destination(e.getDestination().getAccountNumber())
+                        .amount(e.getAmount())
+                        .timestamp(e.getTimestamp())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
