@@ -13,6 +13,7 @@ import id.co.indivara.jdt12.najmi.nbank.model.response.admin.DisplayCustomerAndA
 import id.co.indivara.jdt12.najmi.nbank.model.response.admin.RegisterAccountResponse;
 import id.co.indivara.jdt12.najmi.nbank.model.response.admin.RegisterCustomerResponse;
 import id.co.indivara.jdt12.najmi.nbank.service.AdminService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/admin")
+@SecurityRequirement(name = "basicAuth")
 public class AdminController {
 
     @Autowired
