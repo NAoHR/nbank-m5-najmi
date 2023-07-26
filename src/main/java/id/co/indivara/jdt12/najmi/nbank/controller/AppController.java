@@ -6,6 +6,7 @@ import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.service.AppService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class AppController {
     @Autowired
     private AppService appService;
 
+    @SecurityRequirement(name = "bearerCustomerAuth")
     @GetMapping("/customer")
     public ResponseEntity<Object> showDetailCustomer(@RequestAttribute("customer") Customer customer){
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -31,6 +33,7 @@ public class AppController {
         );
     }
 
+    @SecurityRequirement(name = "bearerCustomerAuth")
     @GetMapping("/customer/accounts")
     public ResponseEntity<Object> showCustomerAccounts(@RequestAttribute("customer") Customer customer){
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -43,6 +46,7 @@ public class AppController {
     }
 
     @GetMapping("/customer/account/detail")
+    @SecurityRequirement(name = "bearerAccountAuth")
     public ResponseEntity<Object> accountDetailAndTransaction(
             @RequestParam(value = "type", required = false, defaultValue = "all") String type,
             @RequestAttribute("account") Account account
@@ -59,6 +63,7 @@ public class AppController {
 
 
     @PostMapping("/transfer")
+    @SecurityRequirement(name = "bearerAccountAuth")
     public ResponseEntity<Object> transferViaApp(
             @RequestAttribute("account") Account account,
             @RequestBody AtmAndAppTransferRequest atmAndAppTransferRequest

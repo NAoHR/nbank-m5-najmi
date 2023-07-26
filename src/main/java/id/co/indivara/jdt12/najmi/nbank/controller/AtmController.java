@@ -5,6 +5,7 @@ import id.co.indivara.jdt12.najmi.nbank.model.request.AtmDepositWithdrawRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.request.AtmAndAppTransferRequest;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.service.AtmService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/atm")
+@SecurityRequirement(name = "bearerAccountAuth")
 public class AtmController {
 
     @Autowired

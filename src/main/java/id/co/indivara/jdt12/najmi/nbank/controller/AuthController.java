@@ -7,6 +7,7 @@ import id.co.indivara.jdt12.najmi.nbank.model.request.customer.AuthCustomerReque
 import id.co.indivara.jdt12.najmi.nbank.model.response.TokenResponse;
 import id.co.indivara.jdt12.najmi.nbank.model.response.WebResponse;
 import id.co.indivara.jdt12.najmi.nbank.service.AuthService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/customer/logout")
+    @SecurityRequirement(name = "bearerCustomerAuth")
     public final ResponseEntity<Object> customerLogout(@RequestAttribute("customer") Customer customer){
         return ResponseEntity.status(HttpStatus.OK).body(WebResponse.builder()
                         .message("Logged Out")
@@ -56,6 +58,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/account/logout")
+    @SecurityRequirement(name = "bearerAccountAuth")
     public final ResponseEntity<Object> accountLogout(@RequestAttribute("account") Account account){
         return ResponseEntity.status(HttpStatus.OK).body(
                 WebResponse.builder()
