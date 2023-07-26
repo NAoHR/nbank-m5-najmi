@@ -10,6 +10,7 @@ import id.co.indivara.jdt12.najmi.nbank.model.TrxTransferReferencedId;
 import id.co.indivara.jdt12.najmi.nbank.repo.TrxDepositRepo;
 import id.co.indivara.jdt12.najmi.nbank.repo.TrxTransferRepo;
 import id.co.indivara.jdt12.najmi.nbank.repo.TrxWithdrawRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -22,16 +23,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class AccountHelper {
 
-    @Autowired
-    private TrxDepositRepo trxDepositRepo;
-
-    @Autowired
-    private TrxTransferRepo trxTransferRepo;
-
-    @Autowired
-    private TrxWithdrawRepo trxWithdrawRepo;
+    private final TrxDepositRepo trxDepositRepo;
+    private final TrxTransferRepo trxTransferRepo;
+    private final TrxWithdrawRepo trxWithdrawRepo;
 
     public final void checkAccountStatus(Account account){
         if(!account.getStatus().equals(StatusEnum.ACTIVE)){

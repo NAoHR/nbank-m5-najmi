@@ -1,4 +1,4 @@
-package id.co.indivara.jdt12.najmi.nbank;
+package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.AccountAuth;

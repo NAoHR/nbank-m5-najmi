@@ -4,11 +4,12 @@ import id.co.indivara.jdt12.najmi.nbank.entity.Account;
 import id.co.indivara.jdt12.najmi.nbank.entity.TrxTransfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-
+@Repository
 public interface TrxTransferRepo extends JpaRepository<TrxTransfer, Long> {
     List<TrxTransfer> findAllByAccount(Account ac);
 

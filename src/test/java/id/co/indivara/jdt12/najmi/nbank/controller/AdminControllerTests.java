@@ -1,4 +1,4 @@
-package id.co.indivara.jdt12.najmi.nbank;
+package id.co.indivara.jdt12.najmi.nbank.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,9 +34,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.lang.model.type.NullType;
-import javax.validation.constraints.Null;
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
