@@ -16,6 +16,7 @@ import id.co.indivara.jdt12.najmi.nbank.repo.CustomerRepo;
 import id.co.indivara.jdt12.najmi.nbank.security.JsonWebToken;
 import id.co.indivara.jdt12.najmi.nbank.service.AuthService;
 import id.co.indivara.jdt12.najmi.nbank.service.helper.AuthHelper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,30 +24,15 @@ import javax.lang.model.type.NullType;
 import javax.transaction.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-
-    @Autowired
-    private ValidatorService validatorService;
-
-    @Autowired
-    private CustomerRepo customerRepo;
-
-    @Autowired
-    private CustomerAuthRepo customerAuthRepo;
-
-
-    @Autowired
-    private AccountRepo accountRepo;
-
-    @Autowired
-    private AccountAuthRepo accountAuthRepo;
-
-
-    @Autowired
-    private JsonWebToken jsonWebToken;
-
-    @Autowired
-    private AuthHelper authHelper;
+    private final ValidatorService validatorService;
+    private final CustomerRepo customerRepo;
+    private final CustomerAuthRepo customerAuthRepo;
+    private final AccountRepo accountRepo;
+    private final AccountAuthRepo accountAuthRepo;
+    private final JsonWebToken jsonWebToken;
+    private final AuthHelper authHelper;
 
 
     @Override
