@@ -4,10 +4,7 @@ import id.co.indivara.jdt12.najmi.nbank.controller.AuthControllerTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.springframework.boot.test.context.SpringBootTest;
-import service.AccountServiceTests;
-import service.AdminServiceTests;
-import service.AppServiceTests;
-import service.AtmServiceTests;
+import service.*;
 
 @SpringBootTest
 @RunWith(Suite.class)
@@ -20,7 +17,8 @@ import service.AtmServiceTests;
 		AccountServiceTests.class,
 		AdminServiceTests.class,
 		AppServiceTests.class,
-		AtmServiceTests.class
+		AtmServiceTests.class,
+		AuthServiceTests.class
 })
 public class NbankApplicationTests {
 
