@@ -15,6 +15,7 @@ import id.co.indivara.jdt12.najmi.nbank.repo.AccountRepo;
 import id.co.indivara.jdt12.najmi.nbank.repo.TrxCardlessRepo;
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.AtmService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,19 +28,12 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Service
+@RequiredArgsConstructor
 public class AtmServiceImpl implements AtmService {
-
-
-    @Autowired
-    private ValidatorService validatorService;
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private TrxCardlessRepo trxCardlessRepo;
-
-    @Autowired
-    private AccountRepo accountRepo;
+    private final ValidatorService validatorService;
+    private final AccountService accountService;
+    private final TrxCardlessRepo trxCardlessRepo;
+    private final AccountRepo accountRepo;
 
     @Override
     public HashMap<String, Object> displayAccountTransactionActivity(Account account, String type) {

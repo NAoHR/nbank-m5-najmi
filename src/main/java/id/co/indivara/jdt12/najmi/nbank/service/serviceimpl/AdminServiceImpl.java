@@ -17,7 +17,7 @@ import id.co.indivara.jdt12.najmi.nbank.security.BCrypt;
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.AdminService;
 import id.co.indivara.jdt12.najmi.nbank.service.helper.AccountCustomerHelper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,30 +29,15 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
-    // helper
-    @Autowired
-    private AccountCustomerHelper accountCustomerHelper;
-
-    // service
-    @Autowired
-    private ValidatorService validatorService;
-
-    // repo
-    @Autowired
-    private CustomerRepo customerRepo;
-
-    @Autowired
-    private AccountRepo accountRepo;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private CustomerAuthRepo customerAuthRepo;
-
-    @Autowired
-    private AccountAuthRepo accountAuthRepo;
+    private final AccountCustomerHelper accountCustomerHelper;
+    private final ValidatorService validatorService;
+    private final CustomerRepo customerRepo;
+    private final AccountRepo accountRepo;
+    private final AccountService accountService;
+    private final CustomerAuthRepo customerAuthRepo;
+    private final AccountAuthRepo accountAuthRepo;
 
     @Override
     @Transactional

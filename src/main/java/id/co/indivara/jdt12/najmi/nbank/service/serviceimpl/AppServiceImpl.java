@@ -15,7 +15,7 @@ import id.co.indivara.jdt12.najmi.nbank.repo.TrxCardlessRepo;
 import id.co.indivara.jdt12.najmi.nbank.service.AccountService;
 import id.co.indivara.jdt12.najmi.nbank.service.AppService;
 import id.co.indivara.jdt12.najmi.nbank.service.helper.AccountHelper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,25 +24,15 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AppServiceImpl implements AppService {
-
-    @Autowired
-    private AccountHelper accountHelper;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private AccountRepo accountRepo;
-
-    @Autowired
-    private ValidatorService validatorService;
-
-    @Autowired
-    private TrxCardlessRepo trxCardlessRepo;
+    private final AccountHelper accountHelper;
+    private final AccountService accountService;
+    private final AccountRepo accountRepo;
+    private final ValidatorService validatorService;
+    private final TrxCardlessRepo trxCardlessRepo;
 
 
     @Override
