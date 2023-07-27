@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 import org.springframework.boot.test.context.SpringBootTest;
 import service.AccountServiceTests;
 import service.AdminServiceTests;
+import service.AppServiceTests;
 
 @SpringBootTest
 @RunWith(Suite.class)
@@ -16,7 +17,8 @@ import service.AdminServiceTests;
 		AuthControllerTests.class,
 		AtmControllerTests.class,
 		AccountServiceTests.class,
-		AdminServiceTests.class
+		AdminServiceTests.class,
+		AppServiceTests.class
 })
 public class NbankApplicationTests {
 
